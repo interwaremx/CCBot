@@ -1,4 +1,4 @@
-![alt text][logo] (http://www.interware.com.mx)  
+![alt text][logo]
 [logo]: http://reedlatam.com/sadmoweb/img/modulos/Listasweb/expo-tecnologia/2016/lista-expositores//logo_iw_soluciones_honestas.png "Interware de México"
 
 # [CCBot](http://www.interware.com.mx)   
