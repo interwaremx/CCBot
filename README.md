@@ -3,21 +3,21 @@
 -----
 # [CCBot](http://www.interware.com.mx)   
 
-CCBot es una plataforma altamente configurable que permite la monitorización de servidores, aplicaciones y servicios, mediante la ejecución de una máquina de estados de pruebas, con el objetivo de informar a los usuarios sobre caídas de servicio, bajo ancho de banda, alta latencia, entre otros problemas comunes de servicio.
+CCBot is a highly configurable platform that allows monitoring of servers, applications and services through the implementation of a testing state machine, with the goal of informing users about service drops, low bandwidth, high latency, and other common service problems.
 
-## Características
-* Set predefinido de pruebas de conectividad/acceso a servicios.
-* Alertas predefinidas.
-* Ejecución de scripts bash.
-* Ejecución de scripts Javascript.
-* Ejecución de scripts clojure.
-* Ejecucíon de Pruebas de acceso/conectividad a bases de datos.
+## Features
+* Tests set for connectivity/service avalability
+* Mailer
+* Bash scripts execution.
+* Javascript scripts execution.
+* Clojure scripts execution.
+* Database conectivity tests.
 
-## Tecnologías
+## Technologies
  * Clojure
  * Java
  
-## Requerimientos
+## Requirements
  * Application Server
  
-## Instalación
+## Installation
