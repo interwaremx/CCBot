@@ -11,9 +11,7 @@
             [clojure.tools.logging :as log]))
 
 (do
-  (println "loading " *ns*)
-  ;(org.apache.log4j.xml.DOMConfigurator/configureAndWatch "log4j.xml")
-  ) 
+  (println "loading " *ns*)) 
 
 (defn to-long [n]
   (try
@@ -56,11 +54,9 @@
 
 (defn config-log4j 
   ([log-file-path]
-    ;(println "configuring log4j:" (class log-file-path) log-file-path (java.io.File. "."))
     (let [logf (java.io.File. log-file-path)
           exist-log? (.exists logf)  
           logf-path (.getAbsolutePath logf)]
-      ;(println "logf:" logf)
       (if exist-log?
         (do
           (println "Configuring log4j with file:" logf-path)

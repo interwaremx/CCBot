@@ -33,20 +33,17 @@
   (println "cbot-ctx:" ctx)
   (if (= ctx :stop)
     (future 
-      ;(Thread/sleep 500)
       (msg/unlisten @listener)
       (println "ya"))
     (let [ctx (assoc ctx :now (System/currentTimeMillis) :count (inc (:count ctx 0)))]
       (Thread/sleep 1000)
       (println "publicando.:" ctx)
-      ;(xa/transaction
         (msg/publish CBOT-TOPIC ctx)
         (let [now (System/currentTimeMillis)
               diff (- error-time now)]
           (println diff)
           (when (and (pos? diff) (< diff 3000))
             (throw (RuntimeException. "En periodo Malo"))))
-        ;)
       )))
 
 (defn start-cbot []

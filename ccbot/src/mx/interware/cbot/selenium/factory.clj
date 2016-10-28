@@ -4,7 +4,6 @@
   (:require 
     [mx.interware.cbot.selenium.data :as data]
     [mx.interware.cbot.web.views.common :as common]))
-;<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 (defn create-tc [{:keys [url title cmds]}]
   (xhtml 
    [:head   

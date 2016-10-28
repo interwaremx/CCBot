@@ -1,10 +1,7 @@
 (ns mx.interware.node.service.node
   (:use
-;    [mx.interware.cbot.web.views.common :as common]
-;    [noir.content.getting-started]
     [noir.core :only [defpartial defpage]]
     [clojure.test]
-;    [hiccup.page :only [include-css include-js html5]]
   )
   (:require
     [mx.interware.cbot.store :as store]
@@ -30,18 +27,6 @@
   {:status 202
    :headers {"Content-Type" "application/clojure; charset=utf-8"}
    :body (pr-str (nodedb/get-node))})
-
-;; conf ::= {:node {:campo1 valor1 :campo2 valor2...}
-;;           :appls {:default {:parameters {:campo1 valor1 :campo2 valor2 ...}
-;;                             :instances {:hoy1 {:campo1 valor1 :campo2 valor2 ...}
-;;                                     :hoy2 {:campo1 valor1 :campo2 valor2 ...}}}
-;;                   :otra {:parameters {:campo1 valor1 :campo2 valor2 ...}
-;;                             :instances {:hoy1 {:campo1 valor1 :campo2 valor2 ...}
-;;                                     :hoy2 {:campo1 valor1 :campo2 valor2 ...}}}}}
-                                       
-;; se inicia con /remote para que se incluya el :remote-addr de la peticion
-
-
 (defn get-conf-central []
   (let [cbot-info (deref mx.interware.cbot.store/app-store)
         node-conf (:node-conf cbot-info)
@@ -188,7 +173,6 @@
 (common/private-page [:post "/services/node"] nod
   (log/debug nod)
   (db/add-node nod))
-;  (services/get-nodes :json))
 
 (common/private-page [:post "/clj/service/node"] nod
   (services/get-nodes :clojure))

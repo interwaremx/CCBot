@@ -5,12 +5,9 @@
     [mx.interware.node.db.confdb :as confdb]
     [mx.interware.node.db.estadb :as estadb]
     [clj-http.client :as http]))
-
-;esta funcion no jala ni se usa !! REMOVED
 (comment defn send-pending-stats [ctx]
   (let [maxrows (Integer/parseInt (or (:max-rows ctx) "10"))
         data (into [] (mx.interware.node.db.estadb/get-pend-ests maxrows))
-        ;dummy1 (println "dummy1:" data)
         result (clj-http.client/post (str (:central-url-base) "/remote/service/estadisticas")
                                      {:form-params  {:vest-map-str (str data)}
                                       :insecure? true})

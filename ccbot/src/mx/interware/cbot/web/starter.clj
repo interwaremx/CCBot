@@ -1,15 +1,10 @@
 (ns mx.interware.cbot.web.starter
-  ;(:import (mx.interware.iwcfdi ValidacionException PACException ComunicacionException))    
   (:require [mx.interware.cbot.web.server :as server]
             [mx.interware.util.basic :as basic]
-            ;[mx.interware.iwcfdi.cancelacion]
-            ;[mx.interware.iwcfdi.util-cfd :as UC]
             ))
  
 (do
-  (println "loading " *ns*)
-  ;(basic/config-log4j)
-  )
+  (println "loading " *ns*))
 
 (comment
   -Djavax.net.ssl.trustStore=/keys/pv.jks 

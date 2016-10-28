@@ -17,7 +17,6 @@
             [mx.interware.cbot.operations :as opr]
             [mx.interware.cbot.util :as util]
             [mx.interware.util.basic :as basic]
-            ;[clj-webdriver.taxi :as t]
             ))
 ;;ya en git2
 (do
@@ -568,7 +567,6 @@
            parameters :parameters
            instances :instances
            pre-states :states} (assoc-in (assoc app :parameters app-params) [:parameters :app_] app-key) 
-          ;(assoc-in (update-in app [:parameters] into (store/get-node-conf)) [:parameters :app_] app-key) 
            states (into {}
                        (map (fn [info]
                               (log/debug "INFO:" info)
@@ -769,8 +767,6 @@
                    stop? (-> par .val deref :stop?)]
                [(keyword application) (keyword instance) (if stop? :STOPPED :RUNNING)]))
          @cbot-ctrl))))
-
-;status-map ::== {:prueba [:uno :dos], :App1 [:UNO]}
 (defn set-runtime-status [status-map-param]
   (let [status-map (limpia status-map-param)]
     (log/debug (str "\n@@@ 0) " status-map))
@@ -813,6 +809,5 @@
 (defn -mainx [& args]
   (println "Iniciando el CBOT-P")
   (log/info "Ya está configurado el log4j")
-  ;(start-cbot cbot) 
   )
 

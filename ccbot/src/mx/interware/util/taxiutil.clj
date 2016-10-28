@@ -5,7 +5,6 @@
             [clojure.tools.logging :as log]
             [clj-webdriver.taxi :as t]
             [clj-webdriver.element :as e]
-            ;Se incluye código para inicialización de firefox driver incluyendo utilizando binary & profile.
             [clj-webdriver.driver :as d]
             [clj-webdriver.core :as c]
             [clj-webdriver.firefox :as f]
@@ -126,7 +125,6 @@
 (defmulti param-builder-fun param-pattern-selector)
 
 (defmethod param-builder-fun :id [drv param-type param-val]
-  ;(str "#" param-val)
   (let [q {:xpath (str "//*[@id='" param-val "']")}]
     (log/debug (str "*** id q:" q))
     (t/find-element drv q)))
@@ -267,7 +265,7 @@
 
 
 (defmethod exec-taxi :waitForElementPresent [selenium drv timeout base {:keys [cmd par1 par2]}]
-  (let [;p (param-builder drv par1)
+  (let [
         t (+ (System/currentTimeMillis) timeout)]
     (log/debug (str "Esperando1 " par1 " " (.isElementPresent selenium par1)))
     (while (and (< (System/currentTimeMillis) t) (not (.isElementPresent selenium par1)))
@@ -278,7 +276,6 @@
 
 (defmethod exec-taxi :waitForPageToLoad [selenium drv timeout base {:keys [cmd par1 par2]}]
   (.waitForPageToLoad selenium par1))
-;  (t/page-source drv))
 
 (defmethod exec-taxi :waitForPopUp [selenium drv timeout base {:keys [cmd par1 par2]}]
   (.waitForPopUp selenium par1 (str timeout)))
@@ -416,7 +413,6 @@
   (let [deltas [300 500 200 700 800 900 900 700 300 500]]
     (some #(= :TIMEOUT (deref (future (println %) (Thread/sleep %) %) limit :TIMEOUT)) deltas)))
 
-;;waitForElementPresent
 (comment let [p (param-builder drv par1)]
     (try
       (t/wait-until drv 

@@ -31,12 +31,6 @@
        [:form#appForm {:action "/admin/reporte-get" :method :get}
         [:table {:class "tableNodeField"}
          [:tr {:height "10px"}]
-         ;[:tr
-         ; [:td {:class "tdFieldNode"} "IP:"]
-         ; [:td (text-field {:maxlength "15"} "ip")]]
-         ;[:tr
-         ; [:td {:class "tdFieldNode"} "Operativa:"]
-         ; [:td (text-field {:maxlength "20"} "operativa")]]
          [:tr 
           [:td {:class "tdFieldNode"} "Fecha Inicio:"]
           [:td [:input {:type "text" :maxlength "10" :id "fechaInicio" :name "fechaInicio" :readonly "true" :class "field"}]]]
@@ -83,7 +77,6 @@
                           (java.lang.StringBuilder. "Nodo,CR,Aplicación,Instancia,Estado,Número-Ejecución,Fecha-Inicio,Hora-Inicio,Tiempo-Ejecución(Milisegundos),Código,Mensaje,Fecha-Recibido,Hora-Recibido\n")
                           vec-map)
           ]
-;      (resp/content-type "application/excel" (java.io.ByteArrayInputStream. sr)))  
       (resp/content-type "text/csv" (java.io.ByteArrayInputStream. (.getBytes (.toString reporte)))))  
     (catch Exception e
       (log/error e "problems at /admin/get-reporte")
@@ -91,11 +84,6 @@
                                (str result k "=" v "&")) 
                              "/admin/reporte?" 
                              (assoc rep "error" (.getMessage e)))))))
-
-
-
-
-;;cambios Edgar
 
 (defn reporte-har [rep]
   (log/debug rep)
@@ -112,12 +100,6 @@
        [:form#appForm {:action "/admin/reporte-har" :method :get}
         [:table {:class "tableNodeField"}
          [:tr {:height "10px"}]
-         ;[:tr
-         ; [:td {:class "tdFieldNode"} "IP:"]
-         ; [:td (text-field {:maxlength "15"} "ip")]]
-         ;[:tr
-         ; [:td {:class "tdFieldNode"} "Operativa:"]
-         ; [:td (text-field {:maxlength "20"} "operativa")]]
          [:tr 
           [:td {:class "tdFieldNode"} "Fecha Inicio:"]
           [:td [:input {:type "text" :maxlength "10" :id "fechaInicio" :name "fechaInicio" :readonly "true" :class "field"}]]]

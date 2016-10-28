@@ -1,0 +1,38 @@
+2016/10/28 16:24:40.042 [main] INFO mx.interware.cbot.web.server - ip del equipo: 127.0.1.1
+2016/10/28 16:24:40.044 [main] INFO mx.interware.cbot.web.server - iniciando nodo con PUBLIC:MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJsfcLyCAU3M/p3t+KCwFkTcuDqHW2MWa6WZYfwH88mg8/xlZdAIjjguAJ+3EbqTnQB7Iz9nSG3iO2BYJdn7ocUCAwEAAQ==
+2016/10/28 16:24:40.044 [main] INFO mx.interware.cbot.web.server - Si esta usando -url-node = http://nombre-del-nodo:puerto, se debe
+2016/10/28 16:24:40.044 [main] INFO mx.interware.cbot.web.server - registrar en el central este nodo de la siguiente manera:
+2016/10/28 16:24:40.045 [main] INFO mx.interware.cbot.web.server -  http://nombre-del-nodo:puerto aumentando el campo
+2016/10/28 16:24:40.045 [main] INFO mx.interware.cbot.web.server -  PUBKEY a la base de datos con valor:
+2016/10/28 16:24:40.045 [main] INFO mx.interware.cbot.web.server -  MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJsfcLyCAU3M/p3t+KCwFkTcuDqHW2MWa6WZYfwH88mg8/xlZdAIjjguAJ+3EbqTnQB7Iz9nSG3iO2BYJdn7ocUCAwEAAQ==
+2016/10/28 16:24:40.045 [main] INFO mx.interware.cbot.web.server - si este es un nodo central debe configurarse sin
+2016/10/28 16:24:40.046 [main] INFO mx.interware.cbot.web.server - -url-node ni -url-central, y debe ser con -central y -port-central
+2016/10/28 16:24:40.046 [main] INFO mx.interware.cbot.web.server - además si se usa -url-central esta será usada para que el
+2016/10/28 16:24:40.046 [main] INFO mx.interware.cbot.web.server - nodo se comunique al central y no se deberá usar -central y -port-central
+2016/10/28 16:24:40.193 [clojure-agent-send-off-pool-0] INFO mx.interware.cbot.store - saving application configuration to /home/jzaragoza/Interware/CCBot/ccbot/CCBOT3-distro/nodes/8050/app-store3.clj
+2016/10/28 16:24:40.193 [main] INFO mx.interware.cbot.web.server - Creando base de datos H2
+2016/10/28 16:24:44.386 [main] INFO mx.interware.cbot.web.server - Insertando administrado inicial para central, user: ccbot, pasword: ***** 
+2016/10/28 16:24:44.491 [main] INFO mx.interware.cbot.web.server - Starting server..
+2016/10/28 16:24:45.778 [main] INFO mx.interware.cbot.web.server - is-central?  true  url-node: nil
+2016/10/28 16:24:45.778 [main] INFO mx.interware.cbot.web.server - heart-beat : -1
+2016/10/28 16:24:45.780 [main] INFO mx.interware.cbot.web.server - Starting web server http-> 8050  https-> 9050
+2016/10/28 16:25:45.290 [537221789@qtp-1498944673-7] INFO mx.interware.cbot.web.views.services - /store/save/ Prueba 
+{:interstate-delay "1000", :stats-cache-len "100", :parameters {:- "-"}, :instances {:Probando {:param-map {:- "-"}}}, :states {"0" {:flow {:y "100", :x "100"}, :key ":start", :conf-map {:opr "sleep-opr", :conf {:delta "3000"}}}}}
+2016/10/28 16:25:45.322 [clojure-agent-send-off-pool-1] INFO mx.interware.cbot.store - saving application configuration to /home/jzaragoza/Interware/CCBot/ccbot/CCBOT3-distro/nodes/8050/app-store3.clj
+2016/10/28 16:25:45.323 [537221789@qtp-1498944673-7] INFO mx.interware.cbot.core - removing from app-ctrl app-key: :Prueba 
+ {}
+2016/10/28 16:26:02.486 [17393861@qtp-1498944673-6] INFO mx.interware.cbot.web.views.services - /store/save/ Prueba 
+{:states {"1" {:conf-map {:retry-count "", :logit "false", :conf {:shell "ls"}, :timeout "", :retry-delay "", :opr "os-cmd-opr"}, :key ":OS", :flow {:x "500", :y "300"}}, "0" {:conf-map {:opr "sleep-opr", :conf {:delta "3000"}}, :key ":start", :flow {:y "100", :x "100"}}}, :interstate-delay "1000", :instances {:Probando {:param-map {:- "-"}}}, :stats-cache-len "100", :parameters {:- "-"}}
+2016/10/28 16:26:02.511 [clojure-agent-send-off-pool-1] INFO mx.interware.cbot.store - saving application configuration to /home/jzaragoza/Interware/CCBot/ccbot/CCBOT3-distro/nodes/8050/app-store3.clj
+2016/10/28 16:26:02.511 [17393861@qtp-1498944673-6] INFO mx.interware.cbot.core - stop-and-remove-old-app stopping  :Prueba:Probando
+2016/10/28 16:26:02.519 [17393861@qtp-1498944673-6] INFO mx.interware.cbot.core - removing from app-ctrl app-key: :Prueba 
+ {:Prueba {:key :Prueba, :interstate-delay 1000, :parameters {:- -, :app_ :Prueba}, :instances {:Probando {:param-map {:- -}}}, :states {:start #mx.interware.cbot.core.State{:id :start, :opr #object[mx.interware.cbot.operations$sleep_opr$fn__8071 0x398df52a mx.interware.cbot.operations$sleep_opr$fn__8071@398df52a], :next-func nil, :coord {:x 100, :y 100}, :logit nil}}, :first :start, :cbot-factory #object[mx.interware.cbot.core$build_cbot_factory$fn__8589 0x232d3dec mx.interware.cbot.core$build_cbot_factory$fn__8589@232d3dec]}}
+2016/10/28 16:27:37.768 [537221789@qtp-1498944673-7] INFO mx.interware.cbot.web.views.services - /store/save/ Prueba 
+{:states {"1" {:conf-map {:retry-count "0", :logit "true", :conf {:shell "ls"}, :timeout "0", :retry-delay "0", :opr "os-cmd-opr"}, :flow {:connect [":SLEEP"], :x "241", :y "15"}, :key ":OS"}, "2" {:flow {:y "95", :x "339", :connect [":start"]}, :conf-map {:opr "sleep-opr", :logit "false", :conf {:delta "1000"}}, :key ":SLEEP"}, "0" {:conf-map {:opr "sleep-opr", :conf {:delta "3000"}}, :key ":start", :flow {:y "100", :connect [":OS"], :x "100"}}}, :interstate-delay "1000", :instances {:Probando {:param-map {:- "-"}}}, :stats-cache-len "100", :parameters {:- "-"}}
+2016/10/28 16:27:37.792 [clojure-agent-send-off-pool-2] INFO mx.interware.cbot.store - saving application configuration to /home/jzaragoza/Interware/CCBot/ccbot/CCBOT3-distro/nodes/8050/app-store3.clj
+2016/10/28 16:27:37.792 [537221789@qtp-1498944673-7] INFO mx.interware.cbot.core - stop-and-remove-old-app stopping  :Prueba:Probando
+2016/10/28 16:27:37.798 [537221789@qtp-1498944673-7] INFO mx.interware.cbot.core - removing from app-ctrl app-key: :Prueba 
+ {:Prueba {:key :Prueba, :interstate-delay 1000, :parameters {:- -, :app_ :Prueba}, :instances {:Probando {:param-map {:- -}}}, :states {:start #mx.interware.cbot.core.State{:id :start, :opr #object[mx.interware.cbot.operations$sleep_opr$fn__8071 0x463e54c8 mx.interware.cbot.operations$sleep_opr$fn__8071@463e54c8], :next-func nil, :coord {:x 100, :y 100}, :logit nil}, :OS #mx.interware.cbot.core.State{:id :OS, :opr #object[mx.interware.cbot.util$wrap_with_catch_to_string$fn__6489 0x4075b02a mx.interware.cbot.util$wrap_with_catch_to_string$fn__6489@4075b02a], :next-func nil, :coord {:x 500, :y 300}, :logit false}}, :first :start, :cbot-factory #object[mx.interware.cbot.core$build_cbot_factory$fn__8589 0x9e15f10 mx.interware.cbot.core$build_cbot_factory$fn__8589@9e15f10]}}
+2016/10/28 16:27:41.269 [clojure-agent-send-off-pool-2] INFO mx.interware.cbot.core - [:start-cbot :id :Probando :current :start :msg "cbot started !!!!"]
+2016/10/28 16:43:41.745 [clojure-agent-send-off-pool-3] INFO mx.interware.cbot.core - clearing chaches for [:Prueba :Probando]
+2016/10/28 16:43:41.746 [clojure-agent-send-off-pool-3] INFO mx.interware.cbot.core - [:stop-cbot :msg "cbot stoped !" :id :Probando]

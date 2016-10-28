@@ -83,14 +83,6 @@
   ([]
     (db-read "select * from users order by userid")))
 
-;(defn insert-records2
-;  "Inserts records into a table. records are maps from strings or keywords
-;  (identifying columns) to values. Inserts the records one at a time.
-;  Returns a sequence of maps containing the generated keys for each record."
-;  [table records]
-;  (let [ins-v (fn [record] (sql/insert-values table (keys record) (vals record)))]
-;    (doall (map ins-v records))))
-
 (defn update-users-status
   "Update users status as a with-db-transaction"
   [users]
@@ -108,7 +100,6 @@
     (throw (java.sql.SQLException. "El usuario ccbot no puede ser eliminado!")))
   (first (del-rows :users "userid = ?" userid)))
 
-;; funcion para hacer que el campo valor de la tabla configuracion sea ahora de antes 200 ahora 1000 chars
 (defn set-configuration-valor-to-1000 []
   (sql/with-db-connection
     [con db]
@@ -116,8 +107,6 @@
 
 (defn update-db [sql-cmd-file]
   (let [dir (java.io.File. ".")
-        ;dummy (println (.getAbsolutePath dir))
-        ;dummy (println sql-cmd-file)
         f (java.io.File. dir sql-cmd-file)
         cmds (slurp f)]
     (println "Ejecutando comandos contenidos en el archivo:" (.getAbsolutePath f))

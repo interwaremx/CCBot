@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  </meta>
+  <link href="https://eco.intranet.com.mx/" rel="selenium.base"></link>
+  <title>hoy</title>
+</head>
+<body>
+  <table border="1" cellpadding="1" cellspacing="1">
+    <thead>
+      <tr><td colspan="3" rowspan="1">hoy</td></tr>
+    </thead>
+    <tbody>
+      <!-- lo que sera necesario es comentar las lineas que no jalan con el usuario que tenemos -->
+      <!-- para eso lo que se hace es comentar el tr que no existe --> 
+      <tr><td>waitForElementPresent</td><td>id=hdCOD_PERFIL_GESTOR_E</td><td></td></tr>
+      <tr><td>waitForElementPresent</td><td>id=hdCr</td><td></td></tr>
+      <tr><td>waitForElementPresent</td><td>id=tabCitas</td><td></td></tr>
+      <tr><td>waitForElementPresent</td><td>id=hdNopags</td><td></td></tr>
+      <tr><td>waitForElementPresent</td><td>id=hdBanco</td><td></td></tr>
+      <tr><td>waitForElementPresent</td><td>id=hdMasDatos</td><td></td></tr>
+      <tr><td>selectFrame</td><td>relative=top</td><td></td></tr>
+    </tbody>
+  </table>
+</body>
+</html>

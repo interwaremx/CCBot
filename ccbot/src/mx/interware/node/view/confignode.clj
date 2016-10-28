@@ -4,7 +4,6 @@
   (:require [clojure.tools.logging :as log]
             [mx.interware.cbot.web.views.common :as common]
             [mx.interware.node.db.appldb :as appldb]
-            ;[mx.interware.node.db.nodedb :as nodedb]
             [mx.interware.node.service.node :as node]
             [mx.interware.cbot.store :as store]
             [noir.util.crypt :as crypt]

@@ -1,88 +1,444 @@
 /*CSS ObNeg*/
-body {font-family: Verdana; background: #ffffff; color: #2F6AAB; margin:0; border:0;}
-#avisoError {position: absolute; margin: 0; top: 12px; left: 10px; display:none; text-align:center;}
 
-.bodyObNEg{background: #EFEFEF; height: 75px; width:315px; margin: 0; padding: 0;}
+body {
+    font-family: Verdana;
+    background: #ffffff;
+    color: #2F6AAB;
+    margin: 0;
+    border: 0;
+}
 
-ul li a {color: #2F6AAB; display: block; float: left; font-weight: bold; line-height: 14px; text-decoration: none; font-family:Verdana; font-size:10px; cursor:pointer;}
-ul li img{top:5px; position:relative; color: #2F6AAB; display: block; float: left; font-weight: bold; line-height: 14px; text-decoration: none; font-family:Verdana; font-size:10px; cursor:pointer;}
-a {color: #2F6AAB; font-size: 10px; text-decoration: none; font-weight:bold; position:relative}
-a:hover{color: #fff; font-size: 10px; text-decoration: none; font-weight:bold; position:relative}
-ul li a:hover {color:#2F6AAB;}
-a:link{font-family:Verdana; color: #2F6AAB; font-size: 10px; text-decoration: none; font-weight:bold; position:relative}
+#avisoError {
+    position: absolute;
+    margin: 0;
+    top: 12px;
+    left: 10px;
+    display: none;
+    text-align: center;
+}
 
-.busquedaPor{position: absolute; top: 2px; left:4px; z-index:100;}
-.arrow{padding-left: 2px; vertical-align:middle; cursor: pointer;}
+.bodyObNEg {
+    background: #EFEFEF;
+    height: 75px;
+    width: 315px;
+    margin: 0;
+    padding: 0;
+}
 
-.separador{color:#B4C2CE; font-weight:bold; font-size:11px}
-.salir{left: 302px; position: absolute; top: 2px;}
+ul li a {
+    color: #2F6AAB;
+    display: block;
+    float: left;
+    font-weight: bold;
+    line-height: 14px;
+    text-decoration: none;
+    font-family: Verdana;
+    font-size: 10px;
+    cursor: pointer;
+}
 
-.valorMostrado{font-style: italic; position:absolute; top:26px; left:7px; text-align:center; width:307px; vertical-align:middle; height:28px;}
-.valorM {overflow:hidden; font-size:11px; color: #000; font-weight: bold; font-style:italic}
-#valorMostradoDiv{width:307px}
-#arrow0, #arrow1, #arrow2{padding-left: 3px;}
+ul li img {
+    top: 5px;
+    position: relative;
+    color: #2F6AAB;
+    display: block;
+    float: left;
+    font-weight: bold;
+    line-height: 14px;
+    text-decoration: none;
+    font-family: Verdana;
+    font-size: 10px;
+    cursor: pointer;
+}
 
-.miniAccesos{position: absolute; top: 57px; left:4px; list-style-type: none}
-.separador1{color:#B4C2CE; font-weight:bold; font-size:11px}
+a {
+    color: #2F6AAB;
+    font-size: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative
+}
 
-#primerCaptura, #segundaCaptura, #tercerCaptura {display:none;}
-#captura0, #captura1, #captura2, #captura3, #captura4, #captura5 {font-family: Verdana; font-size:11px; color: #000; vertical-align:middle; height: 16px; width: 100%;}
-.italica{ font-style: italic; text-align:center;}
+a:hover {
+    color: #fff;
+    font-size: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative
+}
 
-#mensajeCabecera {position:absolute; top: 10px; padding-left: 50px; padding-top: 10px;}
+ul li a:hover {
+    color: #2F6AAB;
+}
 
-.right{text-align: right;}
-.floatLeft{float: left;}
+a:link {
+    font-family: Verdana;
+    color: #2F6AAB;
+    font-size: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative
+}
 
-.ocultar{display:none}
-.mostrar{ display:block}
-.center{ vertical-align:middle; text-align:center}
-.txtRight{text-align:right;vertical-align:middle;}
-.txtLeft{text-align:left;vertical-align:middle;}
-img, body, html {vertical-align: middle;}
+.busquedaPor {
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    z-index: 100;
+}
 
-.tdHover{background: #2F6AAB;}
-.tds{background:#EFEFEF;} 
+.arrow {
+    padding-left: 2px;
+    vertical-align: middle;
+    cursor: pointer;
+}
 
-ul.offPrincipal a{ font-weight:bold; color: #fff; display: block; float: none !important; font-family: Verdana; font-size: 10px; padding: 1px 10px 2px 2px; text-decoration: none; width: auto; background:#2F6AAB; background-image: url('/sinecd_mx_web/portal_pub/imagenes/menu/h_arrow_white.gif'); background-repeat:no-repeat; background-position:right center;}
+.separador {
+    color: #B4C2CE;
+    font-weight: bold;
+    font-size: 11px
+}
 
-ul.offPrincipal a:hover{color: #fff;}
+.salir {
+    left: 302px;
+    position: absolute;
+    top: 2px;
+}
 
-#mensajeCabecera {position:absolute; top: 10px; padding-left: 50px; padding-top: 10px;}
-#cargaBusqueda{background:#FFF; text-align:center; vertical-align:middle; height:74px; width:248px; left: 0;}
-.ocultarCarga{display:none;}
-.mostrarCarga{display: block; position:absolute; z-index:200;}
+.valorMostrado {
+    font-style: italic;
+    position: absolute;
+    top: 26px;
+    left: 7px;
+    text-align: center;
+    width: 307px;
+    vertical-align: middle;
+    height: 28px;
+}
+
+.valorM {
+    overflow: hidden;
+    font-size: 11px;
+    color: #000;
+    font-weight: bold;
+    font-style: italic
+}
+
+#valorMostradoDiv {
+    width: 307px
+}
+
+#arrow0,
+#arrow1,
+#arrow2 {
+    padding-left: 3px;
+}
+
+.miniAccesos {
+    position: absolute;
+    top: 57px;
+    left: 4px;
+    list-style-type: none
+}
+
+.separador1 {
+    color: #B4C2CE;
+    font-weight: bold;
+    font-size: 11px
+}
+
+#primerCaptura,
+#segundaCaptura,
+#tercerCaptura {
+    display: none;
+}
+
+#captura0,
+#captura1,
+#captura2,
+#captura3,
+#captura4,
+#captura5 {
+    font-family: Verdana;
+    font-size: 11px;
+    color: #000;
+    vertical-align: middle;
+    height: 16px;
+    width: 100%;
+}
+
+.italica {
+    font-style: italic;
+    text-align: center;
+}
+
+#mensajeCabecera {
+    position: absolute;
+    top: 10px;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+
+.right {
+    text-align: right;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.ocultar {
+    display: none
+}
+
+.mostrar {
+    display: block
+}
+
+.center {
+    vertical-align: middle;
+    text-align: center
+}
+
+.txtRight {
+    text-align: right;
+    vertical-align: middle;
+}
+
+.txtLeft {
+    text-align: left;
+    vertical-align: middle;
+}
+
+img,
+body,
+html {
+    vertical-align: middle;
+}
+
+.tdHover {
+    background: #2F6AAB;
+}
+
+.tds {
+    background: #EFEFEF;
+}
+
+ul.offPrincipal a {
+    font-weight: bold;
+    color: #fff;
+    display: block;
+    float: none !important;
+    font-family: Verdana;
+    font-size: 10px;
+    padding: 1px 10px 2px 2px;
+    text-decoration: none;
+    width: auto;
+    background: #2F6AAB;
+    background-image: url('/sinecd_mx_web/portal_pub/imagenes/menu/h_arrow_white.gif');
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+ul.offPrincipal a:hover {
+    color: #fff;
+}
+
+#mensajeCabecera {
+    position: absolute;
+    top: 10px;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+
+#cargaBusqueda {
+    background: #FFF;
+    text-align: center;
+    vertical-align: middle;
+    height: 74px;
+    width: 248px;
+    left: 0;
+}
+
+.ocultarCarga {
+    display: none;
+}
+
+.mostrarCarga {
+    display: block;
+    position: absolute;
+    z-index: 200;
+}
+
 
 /* Root = Horizontal, Secondary = Vertical */
-ul.miniBusquedas {font-family: Verdana; font-size: 10px; margin: 0; border: 0 none; padding: 0; height: 16px; background: #2F6AAB; color: #2F6AAB;  cursor:default;} 
 
-ul.miniBusquedas li {margin: 0; border: 0 none; padding: 0; float: left; position: relative; height: 16px;}
-ul.miniBusquedas li:hover {background:#2F6AAB;}
-
-ul.miniBusquedas ul {margin: 0; border: 0 none; padding: 0; width: auto; display: none; position: absolute; top: 16px; background: #FFF; box-shadow: 2px 2px 2px #999; -webkit-box-shadow: 2px 2px 2px #999; -moz-box-shadow: 2px 2px 2px #999;}
-
-ul.miniBusquedas ul:after /*From IE 7 lack of compliance*/ {clear: both; display: block; height: 0; visibility: hidden;}
-ul.miniBusquedas ul li {width: auto; float: left; /*For IE 7 lack of compliance*/ display: block !important; height:auto;
+ul.miniBusquedas {
+    font-family: Verdana;
+    font-size: 10px;
+    margin: 0;
+    border: 0 none;
+    padding: 0;
+    height: 16px;
+    background: #2F6AAB;
+    color: #2F6AAB;
+    cursor: default;
 }
+
+ul.miniBusquedas li {
+    margin: 0;
+    border: 0 none;
+    padding: 0;
+    float: left;
+    position: relative;
+    height: 16px;
+}
+
+ul.miniBusquedas li:hover {
+    background: #2F6AAB;
+}
+
+ul.miniBusquedas ul {
+    margin: 0;
+    border: 0 none;
+    padding: 0;
+    width: auto;
+    display: none;
+    position: absolute;
+    top: 16px;
+    background: #FFF;
+    box-shadow: 2px 2px 2px #999;
+    -webkit-box-shadow: 2px 2px 2px #999;
+    -moz-box-shadow: 2px 2px 2px #999;
+}
+
+ul.miniBusquedas ul:after
+/*From IE 7 lack of compliance*/
+
+{
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+ul.miniBusquedas ul li {
+    width: auto;
+    float: left;
+    /*For IE 7 lack of compliance*/
+    display: block !important;
+    height: auto;
+}
+
+
 /* Root Menu */
-ul.miniBusquedas a {float: none !important; /*For Opera*/ float: left; /*For IE*/ display: block; color: #2F6AAB text-decoration: none; font-family:Verdana; font-size:10px; font-size:10px; text-decoration: none; width:80px;}
-ul.miniBusquedas li img { color: #2F6AAB; cursor: pointer; display: block; float: left; font-family: Verdana; font-size: 10px; font-weight: bold; line-height: 14px; position: relative; text-decoration: none; top: 5px;}
+
+ul.miniBusquedas a {
+    float: none !important;
+    /*For Opera*/
+    float: left;
+    /*For IE*/
+    display: block;
+    color: #2F6AAB text-decoration: none;
+    font-family: Verdana;
+    font-size: 10px;
+    font-size: 10px;
+    text-decoration: none;
+    width: 80px;
+}
+
+ul.miniBusquedas li img {
+    color: #2F6AAB;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: Verdana;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 14px;
+    position: relative;
+    text-decoration: none;
+    top: 5px;
+}
+
 
 /* Root Menu Hover Persistence */
+
+
 /*ul.miniBusquedas a:hover, ul.miniBusquedas li:hover a, ul.miniBusquedas li.iehover a {color: #2F6AAB}*/
-ul.miniBusquedas a.principal:hover{color: #fff}
-ul.miniBusquedas li.iehover a.principal{color: #fff}
+
+ul.miniBusquedas a.principal:hover {
+    color: #fff
+}
+
+ul.miniBusquedas li.iehover a.principal {
+    color: #fff
+}
+
+
 /* 2nd Menu */
-ul.miniBusquedas li:hover li a, ul.miniBusquedas li.iehover li a {float: none; border:none;}
+
+ul.miniBusquedas li:hover li a,
+ul.miniBusquedas li.iehover li a {
+    float: none;
+    border: none;
+}
+
 
 /* 2nd Menu Hover Persistence */
-ul.miniBusquedas li:hover li a:hover, ul.miniBusquedas li:hover li:hover a, ul.miniBusquedas li.iehover li a:hover, ul.miniBusquedas li.iehover li.iehover a{background:#5E8CC0; color: #fff;}
-ul.miniBusquedas li:hover li a.principal:hover, ul.miniBusquedas li:hover li:hover a.principal, ul.miniBusquedas li.iehover li a:hover, ul.miniBusquedas li.iehover li.iehover a.principal{color: #fff}
 
-ul.miniBusquedas ul ul, ul.miniBusquedas ul ul ul {display: none; position: absolute; top: 0; }
+ul.miniBusquedas li:hover li a:hover,
+ul.miniBusquedas li:hover li:hover a,
+ul.miniBusquedas li.iehover li a:hover,
+ul.miniBusquedas li.iehover li.iehover a {
+    background: #5E8CC0;
+    color: #fff;
+}
+
+ul.miniBusquedas li:hover li a.principal:hover,
+ul.miniBusquedas li:hover li:hover a.principal,
+ul.miniBusquedas li.iehover li a:hover,
+ul.miniBusquedas li.iehover li.iehover a.principal {
+    color: #fff
+}
+
+ul.miniBusquedas ul ul,
+ul.miniBusquedas ul ul ul {
+    display: none;
+    position: absolute;
+    top: 0;
+}
+
 
 /* Do Not Move - Must Come Before display:block for Gecko */
-ul.miniBusquedas li:hover ul ul, ul.miniBusquedas li:hover ul ul ul, ul.miniBusquedas li.iehover ul ul, ul.miniBusquedas li.iehover ul ul ul {display: none;}
-ul.miniBusquedas li:hover ul, ul.miniBusquedas ul li:hover ul, ul.miniBusquedas ul ul li:hover ul, ul.miniBusquedas li.iehover ul, ul.miniBusquedas ul li.iehover ul, ul.miniBusquedas ul ul li.iehover ul {display: block;}
 
-ul.miniBusquedas a.principal { font-weight:bold; color: #fff; display: block; float: none !important; font-family: Verdana; font-size: 10px; padding: 1px 10px 2px 2px; text-decoration: none; width: auto; background-image: url('/sinecd_mx_web/portal_pub/imagenes/menu/h_arrow_white.gif'); background-repeat:no-repeat; background-position:right center;}
+ul.miniBusquedas li:hover ul ul,
+ul.miniBusquedas li:hover ul ul ul,
+ul.miniBusquedas li.iehover ul ul,
+ul.miniBusquedas li.iehover ul ul ul {
+    display: none;
+}
+
+ul.miniBusquedas li:hover ul,
+ul.miniBusquedas ul li:hover ul,
+ul.miniBusquedas ul ul li:hover ul,
+ul.miniBusquedas li.iehover ul,
+ul.miniBusquedas ul li.iehover ul,
+ul.miniBusquedas ul ul li.iehover ul {
+    display: block;
+}
+
+ul.miniBusquedas a.principal {
+    font-weight: bold;
+    color: #fff;
+    display: block;
+    float: none !important;
+    font-family: Verdana;
+    font-size: 10px;
+    padding: 1px 10px 2px 2px;
+    text-decoration: none;
+    width: auto;
+    background-image: url('/sinecd_mx_web/portal_pub/imagenes/menu/h_arrow_white.gif');
+    background-repeat: no-repeat;
+    background-position: right center;
+}

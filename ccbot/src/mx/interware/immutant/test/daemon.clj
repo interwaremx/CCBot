@@ -4,7 +4,6 @@
 
 
 (defn start-cbot [q-name t-name init-state state]
-  ;(reset! state init-state)
   (msg/publish q-name :start))
 
 (defn stop-cbot [q-name t-name init-state state]

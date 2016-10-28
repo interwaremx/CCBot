@@ -1,0 +1,87 @@
+#!/bin/sh
+# chkconfig: 35 99 99
+# description: Starts eRobot node service for monitoring.
+#     SUSE system startup script for service ccbotd.
+#     Copyright (C) 2012-2015 Felipe Gerard, eRobot / Interware.
+#
+# /etc/init.d/ccbotd
+#
+### BEGIN INIT INFO
+# Provides:          ccbotd
+# Required-Start:    $ALL
+# Should-Start:      $remote_fs $local_fs $network $time $syslog $portmap
+# Required-Stop:     $local_fs $network $time $syslog $portmap
+# Should-Stop:       $remote_fs
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 6
+# Short-Description: service for eRobot execution on Xvfb (virtual framebuffer server).
+# Description:       Starts eRobot node service for monitoring, 
+#	registering and reporting web browser navigation time for EECC system.
+#	This service needs tcp protocol comunication enable in order to communicate with
+#	the eRobot central server through http subprotocol.
+#	This service starts (and requires) a Xvfb process in order to execute graphics
+#	operatios in memory (required for eRobot internal web browser operations).
+#	This service requires jdk 6 for eRobot execution.
+### END INIT INFO
+###START
+#Para start, se requiere previamente la descompresion y/o copiado del directorio CCBOT3-distro a /opt.
+case "$1" in
+'start')
+
+#La siguiente linea es para operar el directorio del robot para un nodo partcipante (sucursal).
+cd /opt/CCBOT3-distro/
+
+#Se deberan definir diferentes puertos para la central y el nodo en los archivos CENTRAL.PORT y NODE.PORT
+IPCENTRAL=`cat CENTRAL.IP`
+PORTNODE=`cat NODE.PORT`
+PORTCENTRAL=`cat CENTRAL.PORT`
+VERSION=`cat VERSION`
+
+# Se genera el directorio con los archivos para la operacion del nodo.
+if [ ! -d nodes ]
+then
+  mkdir nodes &> /tmp/start-ccbotd.log
+fi
+if [ ! -d nodes/$PORTNODE ]
+then
+  mkdir nodes/$PORTNODE &> /tmp/start-ccbotd.log
+  cp -rv resources nodes/$PORTNODE/ &> /tmp/start-ccbotd.log
+  cp -v log4j* nodes/$PORTNODE/ &> /tmp/start-ccbotd.log
+  cp -v app-store3.clj nodes/$PORTNODE/ &> /tmp/start-ccbotd.log
+  mkdir nodes/$PORTNODE/running &> /tmp/start-ccbotd.log
+fi
+
+#La siguiente linea es para operar el directorio del nodo participante (sucursal) creado. 
+cd nodes/$PORTNODE
+
+#Se valida que existan los archivos de central en el nodo para control de central asociada.
+if [ -f "CENTRAL.IP" ]
+then
+  IPCENTRAL=`cat CENTRAL.IP`
+  PORTCENTRAL=`cat CENTRAL.PORT`
+fi
+
+#La siguiente define una opcion de ejecucion para el robot sobre una sucursal sin servidor X, previa instalacion del servidor xvfb.
+#xvfb-run -n 0 -a -s -noreset
+
+#Se ejecuta el e-Robot en el nodo generando EL ARCHIVO start-ccbotd.log con el reporte de ejecucion de inicio del servicio.
+CMD="xvfb-run -n 0 -a -s -noreset java -Dselenium.no.drv.to.base.x=true -cp ../../lib/ccbot-"$VERSION"-standalone.jar mx.interware.cbot.web.server -central $IPCENTRAL -port-central $PORTCENTRAL -port $PORTNODE -mod prod < /dev/null &> /tmp/start-ccbotd.log &"
+echo $CMD
+eval $CMD
+;;
+
+###STOP
+#Se genera stop-ccbotd.log con el reporte de ejecucion de fin del servicio.
+'stop')
+ps -ef | grep ccbot-$VERSION | awk '{printf("%s\n",$0); if ($8 == "grep") printf("skip %s %s\n",$2,$8); else {printf("kill %s %s\n",$2,$8); system("kill -9 "$2);}}' &> /tmp/stop-ccbotd.log &
+;;
+
+###RESTART
+#Se sugiere el uso de start y stop debido a las diferentes versiones del shell 'startccbot.sh'.
+'restart')
+  $0 stop
+  sleep 1
+  $0 start
+;;
+
+esac
