@@ -18,11 +18,11 @@ CCBot is a friendly and highly configurable platform that allows monitoring of s
  * Java
  
 ## Requirements
- * Application Server
  * Linux based operating system 
+ * Maven
 
 ## Installation
-###Central
+### Central
 1.	Before installing, you need to create a system user, named “cbot” and login using that user.
 2.	Decompress tar file CCBOT3-distro-XX.tg, in order to create CCBOT3-distro directory
 3.	Generate a ssh-key (Using ssh-keygen).
@@ -31,7 +31,7 @@ CCBot is a friendly and highly configurable platform that allows monitoring of s
 6.	Write node server’s port at CCBOT3-distro/ NODE.PORT (8060 is suggested)
 7.	Execute startcentral.sh}
 
-###Nodes
+### Nodes
 1.	Before installing, you need to create a system user, named “cbotnode” and login using that user.
 2.	Create directory shame .ssh in “cbotnode” user’s home directory.
 
