@@ -627,11 +627,8 @@ function ejecutarPeticionAJAX(url, funcionRespuesta, parametros, sincAsinc, func
 		} else {
 			req.onreadystatechange = getReadyStateHandler(req, null, funcionRespuesta, funcionError);
 		}
-
 		req.open("GET", url + "&hash=" + Math.random(), sincAsinc);
-
 		req.send(null);
-
 		if ((funcionRespuesta == null) || (funcionRespuesta == undefined)) {
 			if (req.status == 200) {
 				return req.responseText;

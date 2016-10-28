@@ -4,9 +4,7 @@
             [clojure.pprint :as pp]))
 
 (do
-  (println "loading " *ns*)
-  ;(org.apache.log4j.xml.DOMConfigurator/configureAndWatch "log4j.xml")
-  )
+  (println "loading " *ns*))
 
 (def date-format (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm:ss.SSS"))
 
@@ -79,7 +77,6 @@
 
 (comment defn app-store-save []
   (log/info (str "saving application configuration to " (.getAbsolutePath STORE-FILE)))
-  ;(.printStackTrace (java.lang.Exception. "DE MENTIS PA VER EL STACK"))
   (dosync
    (alter app-store #(inc-version %))
    (with-open [ostream (java.io.PrintWriter. (java.io.OutputStreamWriter. (java.io.FileOutputStream. STORE-FILE-NAME) "UTF-8"))]
@@ -100,7 +97,6 @@
   ((configuration @app-store) id))
 
 (defn get-node-conf [] 
-  ;(clojure.pprint/pprint (node-conf @app-store))
   (node-conf @app-store))
 
 (comment defn set-node-conf-and-app [node-conf appk app-conf]
@@ -182,9 +178,6 @@
   (configuration @app-store))
 
 (defn boot-store []
-;  (when (and (.exists STORE-FILE2) (not (.exists STORE-FILE)))
-;    (app-store-load)
-;    (app-store-save))
   (if-not (.exists STORE-FILE)
     (app-store-save)
     (app-store-load)))

@@ -144,16 +144,4 @@
     [(String. x) (String. (.doFinal cipher (base64/decode (.getBytes x "UTF-8"))) "UTF-8")]))
 
 (comment
-;public static void main(String[] args) throws Exception {
-;    KeyPairGenerator gen = KeyPairGenerator.getInstance("DSA");
-;    KeyPair pair = gen.generateKeyPair();;
-
-;    String pubKey = savePublicKey(pair.getPublic());
-;    PublicKey pubSaved = loadPublicKey(pubKey);
-;    System.out.println(pair.getPublic()+"\n"+pubSaved);
-
-;    String privKey = savePrivateKey(pair.getPrivate());
-;    PrivateKey privSaved = loadPrivateKey(privKey);
-;    System.out.println(pair.getPrivate()+"\n"+privSaved);
-;}
 )

@@ -1,9 +1,4 @@
 // JavaScript Document
-/*INICIO LOGGING*/
-//Script para log en consola, a evolucionar :-)
-//ponerB=false para no mandar alerts
-//if (typeof console=="undefined"){console={log:function(A){var B=false;if(B){alert(A);}}}}
-/*FIN LOGGING*/
 var numclie = sector = segmento = '';
 var CLIENTE_SELECIONADO = new Array(12);
 var GESTOR_SELECIONADO = new Array();
@@ -22,9 +17,6 @@ function validarNumero(valor) {
 }
 
 function validarRFC(cadena) {
-	//La expresion pudo quedar mejor, pero no se dejo el espacio en blanco:(
-	//exprRFC= '^([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{2})(0[1-9]|1[012])([012][1-9]|3[01])';
-	//var exprRFCHomoClave = new RegExp('^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3}))');
 	var exprRFC;
 	if (cadena.length == 10)
 		exprRFC = '^(([A-Z]|[a-z]){4})([0-9]{2})(0[1-9]|1[012])([012][1-9]|[1-3][01])';
@@ -83,15 +75,11 @@ function envioNacar(control, funcion, aplicacionNacar, cargaAscincrona, param1, 
  ******************************************/
 function miFuncion(control, mensajeRespuesta) {
 	var tipoBuscado = busqueda.substring(0, 1);
-	//console.log('tipo Buscado='+tipoBuscado)
 	var datosContexto = getContextoXML(mensajeRespuesta);
 	var lista0 = getDatoXML('NFMX_AVISO', mensajeRespuesta);
-	//Devuelve todos los datos del contexto
 	var aviso = '';
 	if (lista0 != null)
 		aviso = tostring(lista0).trim();
-	//console.log(aviso);    
-
 	try {
 		var lista = getDatoXML('NFMX_DATOS_NACAR', mensajeRespuesta);
 		var NFMX_APEMAT = NFMX_NOMBRE = NFMX_NUMERO_CLIENTE = NFMX_DOMICILIO_1 = NFMX_RFC = NFMX_HOMOCLAVE = NFMX_APEPAT = '';
@@ -106,7 +94,6 @@ function miFuncion(control, mensajeRespuesta) {
 			$(lista).find('simple').each(function () {
 				var campo = $(this).attr('clave');
 				var valor = $(this).text();
-				//alert("valor= "+valor);  
 				valor = valor.trim();
 				switch (campo) {
 					case 'NFMX_APEMAT':
@@ -159,9 +146,6 @@ function miFuncion(control, mensajeRespuesta) {
 						break;
 					case 'NFMX_SEGMENTO':
 						NFMX_SEGMENTO = valor;
-						/*DATOS_NACAR[k]= new Array(NFMX_IND_PROS,NFMX_NOMBRE,NFMX_APEPAT,NFMX_APEMAT,NFMX_RFC,NFMX_HOMOCLAVE,  	                                                  NFMX_NUMERO_CLIENTE,NFMX_DOMICILIO_1,NFMX_NUMCTA,NFMX_SECTOR,NFMX_DES_SECTOR,			                                                  NFMX_SEGMENTO,NFMX_DES_SEGMENTO);					   
-					    k++;
-						*/
 						DATOS_NACAR[k] = new Array(NFMX_IND_PROS, NFMX_NOMBRE, NFMX_APEPAT, NFMX_APEMAT, NFMX_RFC, NFMX_HOMOCLAVE, NFMX_NUMERO_CLIENTE, NFMX_DOMICILIO_1, NFMX_NUMCTA, NFMX_SECTOR, NFMX_DES_SECTOR, NFMX_SEGMENTO, NFMX_DES_SEGMENTO, NFMX_IREALPAT, NFMX_IND1, NFMX_PEYCLIE, NFMX_INDPRE);
 						k++;
 						break;
@@ -170,10 +154,7 @@ function miFuncion(control, mensajeRespuesta) {
 
 						break;
 				}
-				/* DATOS_NACAR[k]= new Array(NFMX_IND_PROS,NFMX_NOMBRE,NFMX_APEPAT,NFMX_APEMAT,NFMX_RFC,NFMX_HOMOCLAVE,  	                                                  NFMX_NUMERO_CLIENTE,NFMX_DOMICILIO_1,NFMX_NUMCTA,NFMX_SECTOR,NFMX_DES_SECTOR,			                                                  NFMX_SEGMENTO,NFMX_DES_SEGMENTO,NFMX_IREALPAT,NFMX_IND1,NFMX_PEYCLIE,NFMX_INDPRE); */
-
 				DATOS_NACAR_1 = DATOS_NACAR;
-				// k++;				   
 			});
 
 			if (DATOS_NACAR_1.length == 1) {
@@ -278,7 +259,6 @@ function miFuncion(control, mensajeRespuesta) {
 function pintarBusqueda(aviso) {
 	var tipoBuscado = busqueda.substring(0, 1);
 	var des, desCorta;
-	//console.log(tipoBuscado);
 	var clase;
 	var respuestaBusqueda = "<table cellpadding=\"3\" cellspacing=\"3\"style=\"margin-left: 12%; margin-top: 5%; vertical-align:middle; background-color:#fff;\">";
 	respuestaBusqueda += "<tr><td><div><table width=\"800px\"style=\"background-color:#fff;\" cellpadding=\"1\" cellspacing=\"1\">";
@@ -317,13 +297,10 @@ function pintarBusqueda(aviso) {
 				var desCorta = "";
 				des = DATOS_NACAR_1[i][j].trim();
 				desCorta = des.substring(0, 15);
-				/*console.log(desCorta);
-				console.log(des);*/
 				respuestaBusqueda += desCorta + '<img title="' + des + '" src="/keon_mult_mult_pub/images/derecha.gif">';
 			} else {
 				respuestaBusqueda += DATOS_NACAR_1[i][j].trim();
 			}
-			//respuestaBusqueda += DATOS_NACAR_1[i][j];
 			respuestaBusqueda += "<\/b><\/td>";
 		}
 		if (DATOS_NACAR_1[i][0] == 'C') {
@@ -430,7 +407,6 @@ function muestraGestores() {
 		}
 		respuestaBusqueda += "<td style=\"text-align:center;\">";
 		respuestaBusqueda += "<a href=\"\#\" onclick=\"slectGestor('";
-		//respuestaBusqueda +=DATOS_NACAR_1[i][1]+"','"+DATOS_NACAR_1[i][2];
 		respuestaBusqueda += i;
 		respuestaBusqueda += "')\" >";
 		respuestaBusqueda += "<img src=\"\/keon_mult_mult_pub\/images\/ECBIInformacion.gif\" \/><\/a><\/td><\/tr>";
@@ -536,7 +512,6 @@ function slectGestor(gestor) {
 	valorMostrado[1] = DATOS_NACAR_1[gestor][0] + " -- " + DATOS_NACAR_1[gestor][1];
 	GESTOR_SELECIONADO = new Array(DATOS_NACAR_1[gestor][0], DATOS_NACAR_1[gestor][1], DATOS_NACAR_1[gestor][2], DATOS_NACAR_1[gestor][3], DATOS_NACAR_1[gestor][4]);
 	GESTOR_SELECIONADO[5] = CR_Buscado;
-	//console.log(GESTOR_SELECIONADO);
 	DATOS_NACAR_1 = new Array();
 
 	ocultarCapturas(1);
@@ -575,7 +550,6 @@ function subirDatos(datosNacar) {
 		subirObNeg();
 	} else {
 		CLIENTE_SELECIONADO = new Array(datosNacar[1], datosNacar[2], datosNacar[3], datosNacar[4], datosNacar[5], datosNacar[6], datosNacar[8], datosNacar[9], datosNacar[10], datosNacar[11], datosNacar[12], datosNacar[13], datosNacar[14], datosNacar[15], datosNacar[16]);
-		// alert('NDPRE'+CLIENTE_SELECIONADO[14]);
 	}
 }
 
@@ -606,11 +580,9 @@ function getDatosBas(control, mensajeRespuesta) {
 
 function numeroTarjeta(input) {
 	TDD = input;
-	//console.log("Copio a TDD: "+TDD);  
 }
 
 function hayTarjetaSeleccionada(mostrarMensaje, mensajePersonalizado) {
-	//console.log('dato ObNeg= '+TDD);
 	if (TDD != '' && TDD != null && TDD != undefined) {
 		return true;
 	} else {
@@ -618,7 +590,6 @@ function hayTarjetaSeleccionada(mostrarMensaje, mensajePersonalizado) {
 			if (!mensajePersonalizado)
 				mensajePersonalizado = "Debe tener un n&uacute;mero de tarjeta seleccionado<br/><br/>Para acceder a esta opci�n seleccione un n&uacute;mero de tarjeta desde la llave de b�squeda de Producto";
 			try {
-				//parent.alertaExt('Error', mensajePersonalizado, 3);
 				top.keonMensaje('error', 'Error al acceder a opci�n', mensajePersonalizado, 'cerrar', 'void(0)');
 			} catch (err) {
 				alert(mensajePersonalizado);
@@ -629,7 +600,6 @@ function hayTarjetaSeleccionada(mostrarMensaje, mensajePersonalizado) {
 }
 
 function hayContratoSeleccionado(mostrarMensaje, mensajePersonalizado) {
-	//console.log('dato ObNeg= '+CLIENTE_SELECIONADO[6]);
 	if (CLIENTE_SELECIONADO[6] != '' && CLIENTE_SELECIONADO[6] != null && CLIENTE_SELECIONADO[6] != undefined) {
 		return true;
 	} else {
@@ -637,7 +607,6 @@ function hayContratoSeleccionado(mostrarMensaje, mensajePersonalizado) {
 			if (!mensajePersonalizado)
 				mensajePersonalizado = "Debe tener un contrato seleccionado<br/><br/>Para acceder a esta opci�n seleccione un contrato desde la ficha 'Operar'";
 			try {
-				//parent.alertaExt('Error', mensajePersonalizado, 3);
 				top.keonMensaje('error', 'Error al acceder a opci�n', mensajePersonalizado, 'cerrar', 'void(0)');
 			} catch (err) {
 				alert(mensajePersonalizado);
@@ -656,7 +625,6 @@ function hayGestorSeleccionado(mostrarMensaje, mensajePersonalizado) {
 			if (!mensajePersonalizado)
 				mensajePersonalizado = "Debe tener un gestor seleccionado<br/><br/>Para acceder a esta opci�n seleccione un gestor del listado en la opci�n 'UG'";
 			try {
-				//parent.alertaExt('Error', mensajePersonalizado, 3);
 				top.keonMensaje('error', 'Error al acceder a opci�n', mensajePersonalizado, 'cerrar', 'void(0)');
 			} catch (err) {
 				alert(mensajePersonalizado);
@@ -676,7 +644,6 @@ function hayClienteSeleccionado(mostrarMensaje, mensajePersonalizado) {
 			if (!mensajePersonalizado)
 				mensajePersonalizado = "Debe tener un cliente seleccionado<br/><br/>Para acceder a esta opci�n seleccione un cliente desde cualquiera de las llaves de b�squeda";
 			try {
-				//parent.alertaExt('Error', mensajePersonalizado, 3);
 				top.keonMensaje('error', 'Error al acceder a opci�n', mensajePersonalizado, 'cerrar', 'void(0)');
 			} catch (err) {
 				alert(mensajePersonalizado);
@@ -687,7 +654,6 @@ function hayClienteSeleccionado(mostrarMensaje, mensajePersonalizado) {
 }
 
 function lanzarOperacionPrincipal(parametro) {
-	//top.frames['FPrincipal'].location.href="procesar.jsp";
 	top.frames['Fprincipal'].location.href = parametro;
 }
 
@@ -723,11 +689,6 @@ function mover_fichaEECC3() {
 	if (hayClienteSeleccionado(true)) {
 		parent.seleccionarPestanya(2);
 		lanzarOperacionPrincipal("https://150.250.250.207:4443/ecinxd_mx_web/ecinxd_mx_web/servlet/web?flujo=KEENFL40501&LOCALE=es_ES&DATOS_ENTRADA.NUMCTE=" + CLIENTE_SELECIONADO[5]);
-		try {
-			//			keonEnvioPeticion();
-		} catch (err) {
-			//console.log(err); // VER INICIO
-		}
 	}
 }
 
@@ -736,11 +697,6 @@ function moverContrata() {
 	if (hayClienteSeleccionado(true)) {
 		parent.seleccionarPestanya(2);
 		parent.ejecutarOperacionNACAREscenario('FC000024', cargarParametros(), 'CTE_TIPO_NAV', null, '1');
-		/*		lanzarOperacionPrincipal("https://150.250.250.207:4443/ecinxd_mx_web/ecinxd_mx_web/servlet/web?flujo=NCMXFL10000&LOCALE=es_ES&DATOS_ENTRADA.NUMCTE="+cargarParametros());*/
-
-		try {} catch (err) {
-			//console.log(err); // VER INICIO
-		}
 	}
 
 }
@@ -771,7 +727,6 @@ function mover_operar() {
 
 function recolocacion() {
 	if (hayClienteSeleccionado(true)) {
-		//alert("Acceso Temporal a Recolocacion NCC");
 		parent.seleccionarPestanya(2);
 		top.document.getElementById('FPrincipal').src = "https://150.250.250.207:4443/ecinxd_mx_web/ecinxd_mx_web/servlet/web?flujo=CRMXFL00100&LOCALE=es_ES&DATOS_ENTRADA.NUMERO_CLIENTE=" +
 			CLIENTE_SELECIONADO[5] + "" +
@@ -788,8 +743,7 @@ function recolocacion() {
 
 /* ultima funion a llamar ya que se tengan todos los datos a subir */
 function subirObNeg() {
-	//subirObjetosNegocio(CLAVES,CLIENTE_SELECIONADO);
-	//alert('Me invocan para subir datos');
+
 }
 
 
@@ -810,18 +764,6 @@ function subidaObjetoLigero(claves, valores) {
 			if (lanzarOperacion(claves, valores) == 'S' || lanzarOperacion(claves, valores) == '')
 
 				parent.ejecutarOperacionNACAREscenario('FC000025', cargarParametros(), 'CTE_TIPO_NAV', null, '1');
-			/***********************************/
-			/*Asi para hacer busqueda */
-			/*
-			  console.log('Busco cuenta');
-			 CLIENTE_SELECIONADO[6]=valores[0];
-			 var textBusqueda ='0'+separador+CLIENTE_SELECIONADO[6];
-			 lanzarFicha=lanzarOperacion(claves1,valores);			 
-			 envioNacar(null,miFuncion,null,true,textBusqueda);			 			 
-			 */
-
-
-
 		} else {
 
 			if (index != null) {
@@ -833,9 +775,7 @@ function subidaObjetoLigero(claves, valores) {
 			}
 		}
 
-	} catch (err) {
-		//console.error(err)
-	}
+	} catch (err) {}
 }
 
 function getClaveClient(claves) {

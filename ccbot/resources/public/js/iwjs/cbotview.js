@@ -10,13 +10,13 @@
 
 /*global jQuery, $, Raphael, alert */
 
-Raphael.fn.arrow  =  function (x1, y1, x2, y2, size) {
-  var angle  =  Math.atan2(x1 - x2, y2 - y1);
-  angle  =  (angle / (2 * Math.PI)) * 360;
+Raphael.fn.arrow = function (x1, y1, x2, y2, size) {
+  var angle = Math.atan2(x1 - x2, y2 - y1);
+  angle = (angle / (2 * Math.PI)) * 360;
   var cx = (x1 + x2) / 2;
   var cy = (y1 + y2) / 2;
-  var arrowPath  =  this.path("M" + cx + " " + cy + " L" + (cx - size) + " " + (cy - size) + " L" + (cx - size) + " " + (cy + size) + " L" + cx + " " + cy ).attr("fill", "black").rotate((90 + angle), cx, cy).toBack();
-  var linePath  =  this.path("M" + x1 + " " + y1 + " L" + x2 + " " + y2).toBack();
+  var arrowPath = this.path("M" + cx + " " + cy + " L" + (cx - size) + " " + (cy - size) + " L" + (cx - size) + " " + (cy + size) + " L" + cx + " " + cy).attr("fill", "black").rotate((90 + angle), cx, cy).toBack();
+  var linePath = this.path("M" + x1 + " " + y1 + " L" + x2 + " " + y2).toBack();
   return [linePath, arrowPath];
 };
 
@@ -49,22 +49,22 @@ var cbot = (function () {
   var connectingState = null;
   var oprDiags = {};
   var arrowDialog = null;
-  
-  var each = function(set, fun) {
+
+  var each = function (set, fun) {
     var i;
     for (i = 0; i < set.length; i++) {
       fun(set[i]);
     }
   };
 
-  var removeIt = function(elem) {
-    if (elem!==null) {
+  var removeIt = function (elem) {
+    if (elem !== null) {
       elem.remove();
     }
     return null;
-  }; 
+  };
 
-  var getWithDefault = function(mapa, path, defaultValue) {
+  var getWithDefault = function (mapa, path, defaultValue) {
     var i;
     var value = mapa;
     for (i = 0; i < path.length; i++) {
@@ -76,7 +76,7 @@ var cbot = (function () {
     return value;
   };
 
-  var connectInConf = function(state, other, regExp) {
+  var connectInConf = function (state, other, regExp) {
     var idx = state.conf_idx;
     var connectArr = conf.states[idx].flow.connect;
     if (connectArr === undefined) {
@@ -87,11 +87,11 @@ var cbot = (function () {
       connectArr.unshift(other.key);
     } else {
       connectArr.unshift(regExp);
-      connectArr.unshift(other.key);      
+      connectArr.unshift(other.key);
     }
   };
 
-  var connectingStart = function(x, y, event) {
+  var connectingStart = function (x, y, event) {
     if (connecting) {
       return;
     }
@@ -99,10 +99,10 @@ var cbot = (function () {
     var bbox = connectImageBBOX;
     offsetX = event.offsetX - (bbox.x + bbox.width);
     offsetY = event.offsetY - (bbox.y + bbox.height);
-    connectingPath = workspace.path("M" + (bbox.x + bbox.width) + " " + (bbox.y + bbox.height)); // + "l0 0"
+    connectingPath = workspace.path("M" + (bbox.x + bbox.width) + " " + (bbox.y + bbox.height));
   };
 
-  var contains = function(arr, elem) {
+  var contains = function (arr, elem) {
     var i;
     for (i = 0; i < arr.length; i++) {
       if (arr[i] === elem) {
@@ -112,7 +112,7 @@ var cbot = (function () {
     return -1;
   };
 
-  var removeArrows = function(state, otherKey) {
+  var removeArrows = function (state, otherKey) {
     var removed = [];
     var i = 0;
     var remover = function (elem) {
@@ -130,26 +130,35 @@ var cbot = (function () {
     return removed;
   };
 
-var labelIt = function(x, y, txt, elem) {
+  var labelIt = function (x, y, txt, elem) {
     var condition = workspace.text(x, y, txt);
     var bbox = condition.getBBox();
     var rr = workspace.rect(bbox.x - 2, bbox.y - 2, bbox.width + 4, bbox.height + 4);
-    rr.attr({fill: "#fff"});
+    rr.attr({
+      fill: "#fff"
+    });
     var tip = workspace.set(rr, condition);
-    tip.attr({opacity: 0}).toBack();//toFront();    
-    elem.hover(function() {
-      tip.toFront().animate({opacity: 1}, 500);
-    }, function() {
-      tip.animate({opacity: 0}, 500).toBack();
+    tip.attr({
+      opacity: 0
+    }).toBack(); //toFront();    
+    elem.hover(function () {
+      tip.toFront().animate({
+        opacity: 1
+      }, 500);
+    }, function () {
+      tip.animate({
+        opacity: 0
+      }, 500).toBack();
     });
     return tip;
   };
 
-  var connectUsing = function(index, state, other, outNum, tipTxt) {
+  var connectUsing = function (index, state, other, outNum, tipTxt) {
     var pt = [parseInt(state.r_t_i_set[0].attrs.x, 10) + state.r_t_i_set[0].attrs.width / 2,
-        parseInt(state.r_t_i_set[0].attrs.y, 10) + state.r_t_i_set[0].attrs.height / 2,
-        parseInt(other.r_t_i_set[0].attrs.x, 10) + other.r_t_i_set[0].attrs.width / 2,
-        parseInt(other.r_t_i_set[0].attrs.y, 10) + other.r_t_i_set[0].attrs.height / 2];
+      parseInt(state.r_t_i_set[0].attrs.y, 10) + state.r_t_i_set[0].attrs.height / 2,
+      parseInt(other.r_t_i_set[0].attrs.x, 10) + other.r_t_i_set[0].attrs.width / 2,
+      parseInt(other.r_t_i_set[0].attrs.y, 10) + other.r_t_i_set[0].attrs.height / 2
+    ];
     var i;
     for (i = 0; i < pt.length; i++) {
       pt[i] = Math.floor(pt[i]);
@@ -157,40 +166,16 @@ var labelIt = function(x, y, txt, elem) {
     var arr = workspace.arrow(pt[0], pt[1], pt[2], pt[3], 4);
     arr[1].data("estado", state);
     arr[1].data("otro", other);
-    arr[1].hover(function() {
+    arr[1].hover(function () {
       removeIt(glowArrow);
       glowArrow = this.glow();
-    }, function() {
-      glowArrow=removeIt(glowArrow);
+    }, function () {
+      glowArrow = removeIt(glowArrow);
     });
-/*
-    arr[1].click(function() {
-      var state = this.data("estado");
-      var other = this.data("otro");
-      var connectArr = conf.states[state.conf_idx].flow.connect;
-      var i = connectArr.length - 1;
-      while (connectArr[i] !== other.key && i >= 0) {
-        i -= 2;
-      }
-      if (i >= 0) {
-        if (i === (connectArr.length - 1)) {
-          jQuery("#regexp").val("default (no modificable)").attr({disabled: true});
-        } else {
-          jQuery("#regexp").val(connectArr[i + 1]).attr({disabled: false});
-        }
-        $("#arrowStateName").val(state.key);
-        $("#arrowOtherStateName").val(other.key);
-        $("#arrowCnctIdx").val(i + 1);
-        arrowDialog.dialog("open");
-      } else {
-        alert("esto no puede pasar!");
-      }
-    });
-      */
     var tip = labelIt((pt[0] + pt[2]) / 2,
-                    (pt[1] + pt[3]) / 2,
-                    outNum + " [" + tipTxt + "]",
-                    state.r_t_i_set);
+      (pt[1] + pt[3]) / 2,
+      outNum + " [" + tipTxt + "]",
+      state.r_t_i_set);
     if (index < 0) {
       state.statesOut.push(other.key);
       state.arrowsOut.push(arr);
@@ -202,13 +187,13 @@ var labelIt = function(x, y, txt, elem) {
     }
   };
 
-  var reConnectStates = function(state, otherName) {
+  var reConnectStates = function (state, otherName) {
     var i;
     for (i = 0; i < state.statesOut.length; i++) {
       var other = states[state.statesOut[i]];
       if (other.key === otherName || otherName === "*") {
         var tipTxt = conf.states[state.conf_idx].flow.connect[i * 2 + 1] !== undefined ?
-              conf.states[state.conf_idx].flow.connect[i * 2 + 1] : "default";
+          conf.states[state.conf_idx].flow.connect[i * 2 + 1] : "default";
         connectUsing(i, state, other, i + 1, tipTxt);
       }
     }
@@ -228,7 +213,7 @@ var labelIt = function(x, y, txt, elem) {
         other.statesIn.push(state.key);
       }
     }
-    otherGlow=removeIt(otherGlow);
+    otherGlow = removeIt(otherGlow);
     connectingPath.remove();
     connectingPath = null;
     connectImage.remove();
@@ -238,80 +223,89 @@ var labelIt = function(x, y, txt, elem) {
     connecting = false;
   };
 
-  var connectingMove = function(dx, dy) {
+  var connectingMove = function (dx, dy) {
     var bbox = connectImageBBOX;
-    connectingPath.attr({"path": "M" + (bbox.x + bbox.width) + " " + (bbox.y + bbox.height) + "l" + (dx + offsetX) + " " + (dy + offsetY)});
+    connectingPath.attr({
+      "path": "M" + (bbox.x + bbox.width) + " " + (bbox.y + bbox.height) + "l" + (dx + offsetX) + " " + (dy + offsetY)
+    });
   };
 
-  var mouseIsOver = function() {
+  var mouseIsOver = function () {
     if (dragging) {
       return;
     }
     if (connectImage !== null) {
       if (connectingPath !== null) {
-        if (connectImageBBOX !== this.group[0].getBBox()) { //ojo con el this
-          // estamos conectando y ahora sobre OTRO estado
+        if (connectImageBBOX !== this.group[0].getBBox()) {
           otherState = states[this.group[0].key];
-          otherGlow=removeIt(otherGlow);
+          otherGlow = removeIt(otherGlow);
           otherGlow = this.group[0].glow();
           return;
         } else {
-          otherGlow=removeIt(otherGlow);
+          otherGlow = removeIt(otherGlow);
           otherState = null;
           return;
         }
       } else {
-        connectImage=removeIt(connectImage);
+        connectImage = removeIt(connectImage);
       }
     }
     var bbox = this.group[0].getBBox();
-    var p = workspace.path("M" + (bbox.x + bbox.width) + " " + (bbox.y + bbox.height) + "l -6 -2 -6 2 2 -6 -4 -2 4 -2 -2 -6 6 2 6 -2 -2 6 4 2 -4 2 z").attr({"fill": "#ff0000"});
+    var p = workspace.path("M" + (bbox.x + bbox.width) + " " + (bbox.y + bbox.height) + "l -6 -2 -6 2 2 -6 -4 -2 4 -2 -2 -6 6 2 6 -2 -2 6 4 2 -4 2 z").attr({
+      "fill": "#ff0000"
+    });
     connectImage = p;
     connectImageBBOX = bbox;
-    //connectImage.drag(connectingMove, connectingStart, connectingStop);
     connectingState = states[this.group[0].key];
   };
 
-  var mouseIsOut = function() {
-    if (this.type === "rect") { //OJO con el this
-      otherGlow=removeIt(otherGlow);
+  var mouseIsOut = function () {
+    if (this.type === "rect") {
+      otherGlow = removeIt(otherGlow);
       otherState = null;
     }
   };
 
-  var getCenter = function(stateName) {
+  var getCenter = function (stateName) {
     var state = states[stateName];
     var bbox = state.r_t_i_set[0].getBBox();
     var x = Math.floor(bbox.x + bbox.width / 2);
     var y = Math.floor(bbox.y + bbox.height / 2);
-    return {"x": x, "y": y};
+    return {
+      "x": x,
+      "y": y
+    };
   };
 
-  var createPathStr = function(from, to) {
+  var createPathStr = function (from, to) {
     return "M" + from.x + ", " + from.y + "L" + to.x + ", " + to.y;
   };
 
-  var connect = function(state, other, outNum, tipTxt) {
+  var connect = function (state, other, outNum, tipTxt) {
     connectUsing(-1, state, other, outNum, tipTxt);
   };
 
-  var localUUID = function() {
+  var localUUID = function () {
     return Raphael.createUUID();
   };
 
- var showRobot = function(idx) {
+  var showRobot = function (idx) {
     var i;
-    if (robot !==  null) {
+    if (robot !== null) {
       for (i = 0; i < 3; i += 1) {
-        robot[i].attr({opacity: 0});
+        robot[i].attr({
+          opacity: 0
+        });
       }
       if (idx >= 0) {
-        robot[idx].animate({opacity: 1}, 500);
+        robot[idx].animate({
+          opacity: 1
+        }, 500);
       }
     }
   };
 
-  var startMonitoring = function(newUUID) {
+  var startMonitoring = function (newUUID) {
     if (monitoring && app.length > 0 && inst.length > 0 && app !== NV && inst !== NV) {
       if (newUUID) {
         lastUUID = localUUID();
@@ -325,7 +319,7 @@ var labelIt = function(x, y, txt, elem) {
           timeout: "20000",
           json: "true"
         },
-        success: function(result) {
+        success: function (result) {
           if (lastUUID === result["request-uuid"]) {
             if (states.length === 0) {
               alert("No hay estados a monitorear!");
@@ -351,16 +345,19 @@ var labelIt = function(x, y, txt, elem) {
             jQuery("#stop-button").hide();
             jQuery("#start-button").hide();
 
-            if (lastState !==  null) {
-              lastState.r_t_i_set[0].animate({"fill": "#bbbbbb",
-                                              "stroke-width": 3,
-                                              "stroke": "#007eaf"
-                                             }, 1000);
+            if (lastState !== null) {
+              lastState.r_t_i_set[0].animate({
+                "fill": "#bbbbbb",
+                "stroke-width": 3,
+                "stroke": "#007eaf"
+              }, 1000);
             }
             lastState = newState;
-            lastState.r_t_i_set[0].animate({fill: "#eeeeee",
-                                            stroke: "#c42530",
-                                            "stroke-width": 3}, 1000);
+            lastState.r_t_i_set[0].animate({
+              fill: "#eeeeee",
+              stroke: "#c42530",
+              "stroke-width": 3
+            }, 1000);
 
             var resultIndex = 0;
             jQuery("table.status").find("tr").each(function (i) {
@@ -389,45 +386,48 @@ var labelIt = function(x, y, txt, elem) {
             }
             var xx = parseInt(states[result.current].r_t_i_set[0].attrs.x, 10);
             var yy = parseInt(states[result.current].r_t_i_set[0].attrs.y, 10);
-            robot.animate({x: xx + 30, y: yy}, 500);
+            robot.animate({
+              x: xx + 30,
+              y: yy
+            }, 500);
             startMonitoring(false);
           }
-        }        
+        }
       });
     }
   };
 
-  var connectStates = function() {
+  var connectStates = function () {
     var i, j;
     var state, other;
     var connectArr;
     var confStates = conf.states;
     for (i = 0; i < confStates.length; i += 1) {
       state = states[confStates[i].key];
-      connectArr = confStates[i].flow.connect;// i es  ===  a state.conf_idx
+      connectArr = confStates[i].flow.connect;
       if (connectArr !== undefined) {
         for (j = 0; j < connectArr.length; j += 2) {
           other = states[connectArr[j]];
           connect(state, other, Math.floor(j / 2 + 1),
-                  connectArr[j + 1] !== undefined ? connectArr[j + 1] : "default");
+            connectArr[j + 1] !== undefined ? connectArr[j + 1] : "default");
         }
       }
     }
     startMonitoring(true);
   };
 
-  var dragStateStart = function() {
+  var dragStateStart = function () {
     if (dragging || connecting) {
       return;
     }
     var state = null;
-    if (this.group !== undefined) {//OJO con this
+    if (this.group !== undefined) {
       dragging = true;
       state = states[this.group[0].key];
     }
     if (state) {
-      connectImage=removeIt(connectImage);
-      connectingPath=removeIt(connectingPath);
+      connectImage = removeIt(connectImage);
+      connectingPath = removeIt(connectingPath);
       var i;
       for (i = 0; i < state.r_t_i_set.length; i++) {
         state.r_t_i_set[i].ox = parseInt(state.r_t_i_set[i].attrs.x, 10);
@@ -439,128 +439,170 @@ var labelIt = function(x, y, txt, elem) {
       each(state.statesIn, function (name) {
         var other = states[name];
         var arrows = removeArrows(other, state.key);
-        each(arrows, function(par) {arrowsIn.push(par); });
+        each(arrows, function (par) {
+          arrowsIn.push(par);
+        });
       });
       var pathsOut = [];
-      each(arrowsOut, function(par) {
-        var from = getCenter(par[0]); from.x0 = from.x; from.y0 = from.y;
-        var to = getCenter(par[1]); to.x0 = to.x; to.y0 = to.y;
-        pathsOut.push({"from": from, 
-                       "to": to, 
-                       "path": workspace.path(createPathStr(from, to)).toBack().attr({"stroke": "#c42530"})});
+      each(arrowsOut, function (par) {
+        var from = getCenter(par[0]);
+        from.x0 = from.x;
+        from.y0 = from.y;
+        var to = getCenter(par[1]);
+        to.x0 = to.x;
+        to.y0 = to.y;
+        pathsOut.push({
+          "from": from,
+          "to": to,
+          "path": workspace.path(createPathStr(from, to)).toBack().attr({
+            "stroke": "#c42530"
+          })
+        });
       });
       var pathsIn = [];
-      each(arrowsIn, function(par) {
-        var from = getCenter(par[0]); from.x0 = from.x; from.y0 = from.y;
-        var to = getCenter(par[1]); to.x0 = to.x; to.y0 = to.y;
-        pathsIn.push({"from": from, 
-                      "to": to, 
-                      "path": workspace.path(createPathStr(from, to)).toBack().attr({"stroke": "#007eaf"})});
+      each(arrowsIn, function (par) {
+        var from = getCenter(par[0]);
+        from.x0 = from.x;
+        from.y0 = from.y;
+        var to = getCenter(par[1]);
+        to.x0 = to.x;
+        to.y0 = to.y;
+        pathsIn.push({
+          "from": from,
+          "to": to,
+          "path": workspace.path(createPathStr(from, to)).toBack().attr({
+            "stroke": "#007eaf"
+          })
+        });
       });
       state.pathsOut = pathsOut;
       state.pathsIn = pathsIn;
     }
   };
 
-  var dragStateStop = function() {
+  var dragStateStop = function () {
     if (!dragging || connecting) {
       return;
     }
     var state = null;
-    if (this.group !== undefined) {//OJO con el this !!!
+    if (this.group !== undefined) {
       state = states[this.group[0].key];
     }
     if (state) {
       var i;
       for (i = 0; i < state.r_t_i_set.length; i++) {
-        delete (state.r_t_i_set[i].ox);
-        delete (state.r_t_i_set[i].oy);
+        delete(state.r_t_i_set[i].ox);
+        delete(state.r_t_i_set[i].oy);
       }
       conf.states[state.conf_idx].flow.x = state.r_t_i_set[0].attrs.x;
       conf.states[state.conf_idx].flow.y = state.r_t_i_set[0].attrs.y;
-      each(state.pathsIn, function(info) {info.path.remove(); });
-      each(state.pathsOut, function(info) {info.path.remove(); });
+      each(state.pathsIn, function (info) {
+        info.path.remove();
+      });
+      each(state.pathsOut, function (info) {
+        info.path.remove();
+      });
       reConnectStates(state, "*");
-      each(state.statesIn, function(name) {
-      var other = states[name];
+      each(state.statesIn, function (name) {
+        var other = states[name];
         reConnectStates(other, state.key);
       });
       dragging = false;
     }
   };
-  
-  var dragStateMove = function(dx, dy) {
+
+  var dragStateMove = function (dx, dy) {
     if (!dragging || connecting) {
       return;
     }
     var state = null;
-    if (this.group !== undefined) {//OJO this
+    if (this.group !== undefined) {
       state = states[this.group[0].key];
     }
     if (state) {
       var x;
       for (x = 0; x < state.r_t_i_set.length; x++) {
         var obj = state.r_t_i_set[x];
-        obj.attr({ x: obj.ox + dx, y: obj.oy + dy });
+        obj.attr({
+          x: obj.ox + dx,
+          y: obj.oy + dy
+        });
       }
-      each(state.pathsOut, function(info) {
+      each(state.pathsOut, function (info) {
         info.from.x = info.from.x0 + dx;
         info.from.y = info.from.y0 + dy;
-        info.path.attr({"path": createPathStr(info.from, info.to)});
+        info.path.attr({
+          "path": createPathStr(info.from, info.to)
+        });
       });
-      each(state.pathsIn, function(info) {
+      each(state.pathsIn, function (info) {
         info.to.x = info.to.x0 + dx;
         info.to.y = info.to.y0 + dy;
-        info.path.attr({"path": createPathStr(info.from, info.to)});
+        info.path.attr({
+          "path": createPathStr(info.from, info.to)
+        });
       });
     }
   };
 
-  var buildState = function(index, state) {
+  var buildState = function (index, state) {
     var txt = workspace.text(75, 50, state.key);
     var icono = workspace.image("/images/" + state["conf-map"].opr + ".gif", 40, 50, 15, 15);
     var g = workspace.set(txt, icono);
     var bbox = g.getBBox();
     var rect = workspace.rect(bbox.x - 8, bbox.y - 2, bbox.width + 16, bbox.height + 4, 8);
-    rect.attr({"stroke": "#007eaf",
-               "stroke-width": 3,
-               "fill": "#bbbbbb"}).toBack();
-    g = workspace.set(rect, txt, icono);//.data("dim", rect.getBBox());
-    g.attr({x: parseInt(state.flow.x, 10), y: parseInt(state.flow.y, 10)});
-    g[1].attr({x: parseInt(g[1].attrs.x, 10) + 15 + bbox.width / 2,
-               y: parseInt(g[1].attrs.y, 10) + 18}).toFront();
-    g[2].attr({x: parseInt(g[2].attrs.x, 10) + 4,
-               y: parseInt(g[2].attrs.y, 10) + 7}).toFront();
+    rect.attr({
+      "stroke": "#007eaf",
+      "stroke-width": 3,
+      "fill": "#bbbbbb"
+    }).toBack();
+    g = workspace.set(rect, txt, icono);
+    g.attr({
+      x: parseInt(state.flow.x, 10),
+      y: parseInt(state.flow.y, 10)
+    });
+    g[1].attr({
+      x: parseInt(g[1].attrs.x, 10) + 15 + bbox.width / 2,
+      y: parseInt(g[1].attrs.y, 10) + 18
+    }).toFront();
+    g[2].attr({
+      x: parseInt(g[2].attrs.x, 10) + 4,
+      y: parseInt(g[2].attrs.y, 10) + 7
+    }).toFront();
     rect.key = state.key;
     g[0].group = g;
     g[2].group = g;
     g[1].group = g;
-    states[state.key] = {"key": state.key,
-                         "r_t_i_set": g,
-                         "conf_idx": index,
-                         "statesOut": [],
-                         "arrowsOut": [],
-                         "tipsOut": [],
-                         "statesIn": []//, "glowArrow":null
-                        };//statesIn los nombres
-                        //de los estados que salen hacia ACA
-    //g.drag(dragStateMove, dragStateStart, dragStateStop);
+    states[state.key] = {
+      "key": state.key,
+      "r_t_i_set": g,
+      "conf_idx": index,
+      "statesOut": [],
+      "arrowsOut": [],
+      "tipsOut": [],
+      "statesIn": []
+    };
     g.mouseover(mouseIsOver);
     g.mouseout(mouseIsOut);
-    //g.dblclick(updateState);
     return states[state.key];
   };
 
-  var buildWorkspace = function(confParam) {
+  var buildWorkspace = function (confParam) {
     var i;
-    connectImage=removeIt(connectImage);
-    connectingPath=removeIt(connectingPath);
+    connectImage = removeIt(connectImage);
+    connectingPath = removeIt(connectingPath);
     conf = confParam;
     workspace.clear();
 
-    var rStart = workspace.image("/images/robot-start.gif", 100, 100, 15, 15).toFront().attr({opacity: 0});
-    var rStop = workspace.image("/images/robot-stop.gif", 100, 100, 15, 15).toFront().attr({opacity: 0});
-    var rWaiting = workspace.image("/images/robot-waiting.gif", 100, 100, 15, 15).toFront().attr({opacity: 0});
+    var rStart = workspace.image("/images/robot-start.gif", 100, 100, 15, 15).toFront().attr({
+      opacity: 0
+    });
+    var rStop = workspace.image("/images/robot-stop.gif", 100, 100, 15, 15).toFront().attr({
+      opacity: 0
+    });
+    var rWaiting = workspace.image("/images/robot-waiting.gif", 100, 100, 15, 15).toFront().attr({
+      opacity: 0
+    });
     robot = workspace.set(rStart, rStop, rWaiting);
     states = {};
     for (i = 0; i < conf.states.length; i += 1) {
@@ -569,7 +611,7 @@ var labelIt = function(x, y, txt, elem) {
     connectStates();
   };
 
-  var setTimeoutOpr = function(confState, div) {
+  var setTimeoutOpr = function (confState, div) {
     div.find("#timeout").val(confState["conf-map"].timeout);
     div.find("#retry-delay").val(confState["conf-map"]["retry-delay"]);
     div.find("#retry-count").val(confState["conf-map"]["retry-count"]);
@@ -581,45 +623,45 @@ var labelIt = function(x, y, txt, elem) {
       div.find("#state-name").val(state.key);
       div.find("#delta").val(getWithDefault(confState, ["conf-map", "conf", "delta"], "1000"));
     },
-    "socket-opr": function(state, confState) {
+    "socket-opr": function (state, confState) {
       var div = $("#socket-oprDialog");
       div.find("#state-name").val(state.key);
       setTimeoutOpr(confState, div);
       div.find("#host").val(getWithDefault(confState, ["conf-map", "conf", "host"], "localhost"));
       div.find("#port").val(getWithDefault(confState, ["conf-map", "conf", "port"], "22"));
     },
-    "os-cmd-opr": function(state, confState) {
+    "os-cmd-opr": function (state, confState) {
       var div = $("#os-cmd-oprDialog");
       div.find("#state-name").val(state.key);
       setTimeoutOpr(confState, div);
       div.find("#shell").val(getWithDefault(confState, ["conf-map", "conf", "shell"], "ls"));
     },
-    "human-opr": function(state, confState) {
+    "human-opr": function (state, confState) {
       var div = $("#human-oprDialog");
       div.find("#state-name").val(state.key);
     },
-    "switch-good-opr": function(state, confState) {
+    "switch-good-opr": function (state, confState) {
       var div = $("#switch-good-oprDialog");
       div.find("#state-name").val(state.key);
     },
-    "switch-bad-opr": function(state, confState) {
+    "switch-bad-opr": function (state, confState) {
       var div = $("#switch-bad-oprDialog");
       div.find("#state-name").val(state.key);
       var minutes2wait = getWithDefault(confState, ["conf-map", "conf", "minutes2wait"], "60");
       div.find("#minutes2wait").val(minutes2wait);
     },
-    "date-time-opr": function(state, confState) {
+    "date-time-opr": function (state, confState) {
       var div = $("#date-time-oprDialog");
       div.find("#state-name").val(state.key);
       var format = getWithDefault(confState, ["conf-map", "conf", "format"], "HH");
       div.find("#format").val(format);
     },
-    "log-opr": function(state, confState) {
+    "log-opr": function (state, confState) {
       var div = $("#log-oprDialog");
       div.find("#state-name").val(state.key);
       div.find("#text").val(getWithDefault(confState, ["conf-map", "conf", "text"], "Message"));
       var lev = getWithDefault(confState, ["conf-map", "conf", "level"], ":debug");
-      div.find("#log-levels").find("option").each(function() {
+      div.find("#log-levels").find("option").each(function () {
         this.selected = $(this).val() === lev;
       });
     },
@@ -649,7 +691,7 @@ var labelIt = function(x, y, txt, elem) {
       div.find("#state-name").val(state.key);
       div.find("#host").val(getWithDefault(confState, ["conf-map", "conf", "host"], "smtp.gmail.com"));
       div.find("#port").val(getWithDefault(confState, ["conf-map", "conf", "port"], "465"));
-      div.find("#ssl").attr("checked",getWithDefault(confState, ["conf-map", "conf", "ssl"], "true")==="true");
+      div.find("#ssl").attr("checked", getWithDefault(confState, ["conf-map", "conf", "ssl"], "true") === "true");
       div.find("#user").val(getWithDefault(confState, ["conf-map", "conf", "user"], "userId"));
       div.find("#password").val(getWithDefault(confState, ["conf-map", "conf", "passwd"], ""));
       div.find("#to-vec").val(getWithDefault(confState, ["conf-map", "conf", "to-vec"], "smtp.gmail.com"));
@@ -673,7 +715,7 @@ var labelIt = function(x, y, txt, elem) {
     }
   };
 
-  var removeState = function(opr) {
+  var removeState = function (opr) {
     var div = $("#" + opr + "Dialog");
     var state = states[div.find("#state-name").val()];
     var i, j;
@@ -686,7 +728,7 @@ var labelIt = function(x, y, txt, elem) {
         connectVec = [];
         if (cur.flow.connect !== undefined) {
           for (j = 0; j < cur.flow.connect.length; j += 2) {
-            if (cur.flow.connect[j] !==  state.key) {
+            if (cur.flow.connect[j] !== state.key) {
               connectVec.push(cur.flow.connect[j]);
               if (j < cur.flow.connect.length - 1) {
                 connectVec.push(cur.flow.connect[j + 1]);
@@ -702,7 +744,7 @@ var labelIt = function(x, y, txt, elem) {
     buildWorkspace(conf);
   };
 
-  var getTimeoutOpr = function(div, state) {
+  var getTimeoutOpr = function (div, state) {
     var timeout = div.find("#timeout").val();
     var rCount = div.find("#retry-count").val();
     var rDelay = div.find("#retry-delay").val();
@@ -716,7 +758,9 @@ var labelIt = function(x, y, txt, elem) {
       var div = $("#sleep-oprDialog");
       var state = states[div.find("#state-name").val()];
       var delta = div.find("#delta").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"delta": delta};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "delta": delta
+      };
     },
     "socket-opr": function () {
       var div = $("#socket-oprDialog");
@@ -724,56 +768,72 @@ var labelIt = function(x, y, txt, elem) {
       getTimeoutOpr(div, state);
       var host = div.find("#host").val();
       var port = div.find("#port").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"host": host, "port": port};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "host": host,
+        "port": port
+      };
     },
     "os-cmd-opr": function () {
       var div = $("#os-cmd-oprDialog");
       var state = states[div.find("#state-name").val()];
       getTimeoutOpr(div, state);
       var shell = div.find("#shell").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"shell": shell};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "shell": shell
+      };
     },
-    "human-opr": function () {
-    },
-    "switch-good-opr": function () {
-    },
+    "human-opr": function () {},
+    "switch-good-opr": function () {},
     "switch-bad-opr": function () {
       var div = $("#switch-bad-oprDialog");
       var state = states[div.find("#state-name").val()];
       var minutes2wait = div.find("#minutes2wait").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"minutes2wait": minutes2wait};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "minutes2wait": minutes2wait
+      };
     },
     "date-time-opr": function () {
       var div = $("#date-time-oprDialog");
       var state = states[div.find("#state-name").val()];
       var format = div.find("#format").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"format": format};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "format": format
+      };
     },
     "log-opr": function () {
       var div = $("#log-oprDialog");
       var state = states[div.find("#state-name").val()];
       var level = div.find("#log-levels option:selected").val();
       var text = div.find("#text").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"level": level, "text": text};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "level": level,
+        "text": text
+      };
     },
     "print-msg-opr": function () {
       var div = $("#print-msg-oprDialog");
       var state = states[div.find("#state-name").val()];
       var msg = div.find("#msg").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"msg": msg};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "msg": msg
+      };
     },
     "print-context-opr": function () {
       var div = $("#print-context-oprDialog");
       var state = states[div.find("#state-name").val()];
       var filter = div.find("#filter-re").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"filter-re": filter};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "filter-re": filter
+      };
     },
     "get-http-opr": function () {
       var div = $("#get-http-oprDialog");
       var state = states[div.find("#state-name").val()];
       getTimeoutOpr(div, state);
       var url = div.find("#url").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"url": url};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "url": url
+      };
     },
     "post-http-opr": function () {
       var div = $("#post-http-oprDialog");
@@ -781,7 +841,10 @@ var labelIt = function(x, y, txt, elem) {
       getTimeoutOpr(div, state);
       var url = div.find("#url").val();
       var params = div.find("#params").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"url": url, "params": params};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "url": url,
+        "params": params
+      };
     },
     "send-mail-opr": function () {
       var div = $("#send-mail-oprDialog");
@@ -789,7 +852,7 @@ var labelIt = function(x, y, txt, elem) {
       getTimeoutOpr(div, state);
       var host = div.find("#host").val();
       var port = div.find("#port").val();
-      var tmp=$(div.find("#ssl")).is(":checked");
+      var tmp = $(div.find("#ssl")).is(":checked");
       var ssl = tmp;
       var user = div.find("#user").val();
       var password = div.find("#password").val();
@@ -797,7 +860,7 @@ var labelIt = function(x, y, txt, elem) {
       var subject = div.find("#subject").val();
       var textvec = div.find("#text-vec").val();
       conf.states[state.conf_idx]["conf-map"].conf = {
-        "host": host, 
+        "host": host,
         "port": port,
         "ssl": ssl,
         "user": user,
@@ -811,28 +874,34 @@ var labelIt = function(x, y, txt, elem) {
       var div = $("#clojure-oprDialog");
       var state = states[div.find("#state-name").val()];
       var code = div.find("#code").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"code": code};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "code": code
+      };
     },
     "js-opr": function () {
       var div = $("#js-oprDialog");
       var state = states[div.find("#state-name").val()];
       var code = div.find("#code").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"code": code};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "code": code
+      };
     },
     "play-sound-opr": function () {
       var div = $("#play-sound-oprDialog");
       var state = states[div.find("#state-name").val()];
       var path = div.find("#path").val();
-      conf.states[state.conf_idx]["conf-map"].conf = {"path": path};
+      conf.states[state.conf_idx]["conf-map"].conf = {
+        "path": path
+      };
     }
   };
 
-  var updateState = function() {
+  var updateState = function () {
     var state = states[this.group[0].key];
     var confState = conf.states[state.conf_idx];
     var opr = confState["conf-map"].opr;
     oprSetFunc[opr](state, confState);
-    var getDialog4Opr = function(opr) {
+    var getDialog4Opr = function (opr) {
       var oprDiag = opr + "Dialog";
       if (oprDiags[oprDiag] === undefined) {
         oprDiags[oprDiag] = $("#" + oprDiag).dialog({
@@ -840,18 +909,18 @@ var labelIt = function(x, y, txt, elem) {
           modal: true,
           width: 'auto',
           buttons: {
-            "Aceptar": function() {
+            "Aceptar": function () {
               oprOKFunc[opr]();
               $(this).dialog("close");
             },
-            "Eliminar": function() {
+            "Eliminar": function () {
               removeState(opr);
-              each(states,function (state) {
+              each(states, function (state) {
                 state.r_t_i_set.dblclick(updateState);
               });
               $(this).dialog("close");
             },
-            "Cancelar": function() {
+            "Cancelar": function () {
               $(this).dialog("close");
             }
           }
@@ -862,22 +931,20 @@ var labelIt = function(x, y, txt, elem) {
     getDialog4Opr(opr).dialog("open");
   };
 
-  var buildWorkspaceAndInitDblClick = function(app,conf) {
+  var buildWorkspaceAndInitDblClick = function (app, conf) {
     buildWorkspace(conf);
     var stateName;
     for (stateName in states) {
-      if (states.hasOwnProperty(stateName)) {
-        //states[stateName].r_t_i_set.dblclick(updateState);
-      }
+      if (states.hasOwnProperty(stateName)) {}
     }
     jQuery.ajax({
-          url: "/apps/" + app,
-          dataType: "json",
-          success: fillInstances
-        });
+      url: "/apps/" + app,
+      dataType: "json",
+      success: fillInstances
+    });
   };
 
-  var fillSelect = function(json, tagLabel) {
+  var fillSelect = function (json, tagLabel) {
     var combo = jQuery(tagLabel).empty();
     var selected = NV;
     var i;
@@ -892,7 +959,7 @@ var labelIt = function(x, y, txt, elem) {
     return selected;
   };
 
-  var removeFromArr = function(arr, value) {
+  var removeFromArr = function (arr, value) {
     var tmp = [];
     var i;
     for (i === 0; i < arr.length; i++) {
@@ -903,13 +970,13 @@ var labelIt = function(x, y, txt, elem) {
     return tmp;
   };
 
-  var instanceChange = function() {
+  var instanceChange = function () {
     showRobot(HIDE_ROBOT);
     inst = jQuery("#instances option:selected").text();
     startMonitoring(true);
   };
 
-  var setMonitor = function(monitorVal) {
+  var setMonitor = function (monitorVal) {
     monitoring = monitorVal;
     if (!monitoring) {
       showRobot(HIDE_ROBOT);
@@ -917,101 +984,105 @@ var labelIt = function(x, y, txt, elem) {
   };
 
 
- var fillInstances = function(instances) {
+  var fillInstances = function (instances) {
     inst = fillSelect(instances, "#instances");
     jQuery("#instances").change(instanceChange);
     setMonitor(true);
     instanceChange();
   };
 
-  var applicationChange = function() {
+  var applicationChange = function () {
     setMonitor(false);
     app = jQuery("#applications option:selected").text();
     inst = NV;
     jQuery.ajax({
       url: "/apps/" + app,
-      dataType: "json",        
+      dataType: "json",
       success: fillInstances
     });
     jQuery.ajax({
       url: "/conf/" + app,
       dataType: "json",
-      success: function (conf) {buildWorkspaceAndInitDblClick(app,conf);}
+      success: function (conf) {
+        buildWorkspaceAndInitDblClick(app, conf);
+      }
     });
   };
 
   return {
-    fillApplications: function(apps) {
+    fillApplications: function (apps) {
       if (apps.length > 0) {
-        app=fillSelect(apps,"#applications");
+        app = fillSelect(apps, "#applications");
         jQuery("#applications").change(applicationChange);
-        //jQuery.ajax({
-        //  url: "/apps/" + app,
-        //  dataType: "json",
-        //  success: fillInstances
-        //});
-        inst=NV; 
+        inst = NV;
         jQuery.ajax({
           url: "/conf/" + app,
           dataType: "json",
-          success: function (conf) {buildWorkspaceAndInitDblClick(app,conf);}
+          success: function (conf) {
+            buildWorkspaceAndInitDblClick(app, conf);
+          }
         });
       }
     },
-    fillOperations: function(oprs) {
+    fillOperations: function (oprs) {
       fillSelect(oprs, "#operations");
     },
-    setMonitoring: function(monitoringVal) {
+    setMonitoring: function (monitoringVal) {
       setMonitor(monitoringVal);
     },
-    startMonitoring: function(monitoring) {
-        startMonitoring(monitoring);
-      },
-    startInstance: function() {
+    startMonitoring: function (monitoring) {
+      startMonitoring(monitoring);
+    },
+    startInstance: function () {
       jQuery.ajax({
         url: "/apps/" + app + "/" + inst,
-        //dataType: "json",
-        data: {"cmd": "start"},
-        success: function(result) {
+        data: {
+          "cmd": "start"
+        },
+        success: function (result) {
           jQuery("#result-str").text(result);
           startMonitoring(false);
         }
       });
       jQuery("#start-button").hide();
     },
-    stopInstance: function() {
+    stopInstance: function () {
       jQuery.ajax({
         url: "/apps/" + app + "/" + inst,
-        //dataType: "json",
-        data: {"cmd": "stop"},
-        success: function(result) {
+        data: {
+          "cmd": "stop"
+        },
+        success: function (result) {
           jQuery("#result-str").text(result);
           startMonitoring(false);
         }
       });
       jQuery("#stop-button").hide();
     },
-    resumeInstance: function() {
+    resumeInstance: function () {
       var msg = jQuery("#resume-msg").val();
       jQuery.ajax({
         url: "/apps/" + app + "/" + inst,
-        //dataType: "json",
-        data: {"cmd": "resume",
-               "msg": msg},
-        success: function(result) {
+        data: {
+          "cmd": "resume",
+          "msg": msg
+        },
+        success: function (result) {
           jQuery("#result-str").text(result);
           startMonitoring(false);
         }
       });
       jQuery("#resume").hide();
     },
-    saveStates: function() {
+    saveStates: function () {
       jQuery.ajax({
         type: "POST",
         url: "/store/save/" + app,
         dataType: "json",
-        data: {"conf": conf},
-        success: function(result) {
+        data: {
+          "conf": conf
+        },
+        success: function (result) {
           alert(result.result);
           applicationChange();
           setMonitor(true);
@@ -1020,48 +1091,47 @@ var labelIt = function(x, y, txt, elem) {
       });
     },
     setWorkspace: function (wrkspc) {
-      workspace=wrkspc;
+      workspace = wrkspc;
     },
-    currentApp: function() {
+    currentApp: function () {
       return app;
     },
-    gNV: function() {
+    gNV: function () {
       return NV;
     },
-    addNewState: function(newState) {
-      var len=0;
+    addNewState: function (newState) {
+      var len = 0;
       if (conf !== undefined && conf.states !== undefined) {
-        len=conf.states.length;
+        len = conf.states.length;
       }
-      buildState(len,newState).r_t_i_set.dblclick(updateState);
+      buildState(len, newState).r_t_i_set.dblclick(updateState);
       conf.states.push(newState);
 
-//init new state
+      //init new state
       var opr = newState["conf-map"].opr;
-      oprSetFunc[opr](newState,newState);
-      var div = $("#"+opr+"Dialog");
-      //alert(newState["conf-map"].opr);
+      oprSetFunc[opr](newState, newState);
+      var div = $("#" + opr + "Dialog");
       div.find("#state-name").val(newState.key);
       oprOKFunc[newState["conf-map"].opr]();
     },
-    createArrowDiag: function() {
+    createArrowDiag: function () {
       arrowDialog = $("#arrowDialog").dialog({
         autoOpen: false,
         modal: true,
-        buttons : {
-          "Aceptar": function() {
+        buttons: {
+          "Aceptar": function () {
             var state = states[$("#arrowStateName").val()];
             var other = states[$("#arrowOtherStateName").val()];
             var connectArr = conf.states[state.conf_idx].flow.connect;
             var i = $("#arrowCnctIdx").val();
-            if (i<connectArr.length) {
+            if (i < connectArr.length) {
               connectArr[i] = $("#regexp").val();
             }
             removeArrows(state, other.key);
             reConnectStates(state, other.key);
             $(this).dialog("close");
           },
-          "Eliminar": function() {
+          "Eliminar": function () {
             var state = states[$("#arrowStateName").val()];
             var other = states[$("#arrowOtherStateName").val()];
             var connectArr = conf.states[state.conf_idx].flow.connect;
@@ -1082,13 +1152,13 @@ var labelIt = function(x, y, txt, elem) {
             conf.states[state.conf_idx].flow.connect = nconnectArr;
             $(this).dialog("close");
           },
-          "Cancelar": function() {
+          "Cancelar": function () {
             $(this).dialog("close");
           }
         }
       });
     },
-    applicationsScreen: function() {
+    applicationsScreen: function () {
       jQuery("#robot-screen").hide();
       jQuery("#app-screen").show();
     }
@@ -1096,18 +1166,28 @@ var labelIt = function(x, y, txt, elem) {
 }());
 
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
   cbot.setWorkspace(new Raphael("states", "740", "400"));
   cbot.createArrowDiag();
   jQuery("#start-button").click(cbot.startInstance);
   jQuery("#stop-button").click(cbot.stopInstance);
   jQuery("#resume-button").click(cbot.resumeInstance);
-  jQuery("#add-state").click(function() {
+  jQuery("#add-state").click(function () {
     if (cbot.currentApp() !== cbot.gNV()) {
       var stateName = ":" + jQuery("#state-name").val();
       var stateOpr = jQuery("#operations option:selected").text();
-      var newState = {flow: {x: 500, y: 300, connect: []}, key: stateName,
-                    "conf-map": {opr: stateOpr, conf: []}};
+      var newState = {
+        flow: {
+          x: 500,
+          y: 300,
+          connect: []
+        },
+        key: stateName,
+        "conf-map": {
+          opr: stateOpr,
+          conf: []
+        }
+      };
       cbot.addNewState(newState);
     }
   });
@@ -1116,7 +1196,7 @@ jQuery(document).ready(function() {
   jQuery("#start-monitor-button").click(function () {
     cbot.setMonitoring(true);
     cbot.startMonitoring(true);
-  });  
+  });
   jQuery("#stop-monitor-button").click(function () {
     cbot.setMonitoring(false);
     cbot.startMonitoring(true);
@@ -1126,7 +1206,7 @@ jQuery(document).ready(function() {
     dataType: "json",
     success: cbot.fillOperations
   });
-  
+
   jQuery("#app-link").click(cbot.applicationsScreen);
 
   var apps = jQuery("#applications");
@@ -1137,4 +1217,3 @@ jQuery(document).ready(function() {
     success: cbot.fillApplications
   });
 });
-

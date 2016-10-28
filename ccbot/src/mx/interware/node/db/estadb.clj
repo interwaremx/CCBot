@@ -49,7 +49,6 @@
 (defn get-pend-store-cests [max-recs]
   (take max-recs (iwdb/db-read 
                    "select ID,APPL,INST,STATE,INICIO,DELTA,RECIBIDO,CODIGO,EJECUCION,MENSAJE,IP,SHORTN from cestadistica where concentrado IS NULL order by inicio"
-                   ;"select ID,APPL,INST,STATE,INICIO,DELTA,RECIBIDO,CODIGO,EJECUCION,MENSAJE,IP,SHORTN from cestadistica order by inicio"
                    )))
 
 
@@ -80,9 +79,9 @@
 
 ;;; funciones para manejo de estadistica remota
 
-;;ESTO ES PARA LA CONEXION A ORACLE
+;;Esto es para la conexción a Oracle
 (def dbRemote {:classname "org.h2.Driver"
-         :subprotocol "h2" ;iw:com.mysql.jdbc.Driver:jdbc:
+         :subprotocol "h2"
          :subname "file:db/ccbotDB"
          })
 

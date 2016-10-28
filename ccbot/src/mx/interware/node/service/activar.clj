@@ -13,8 +13,6 @@
 
 (common/private-page [:get "/service/activar"] activar
   (log/debug activar)
-  ;(println (json/json-str {:instancias (instdb/get-instancia (:appl activar))}))
-  ;(json/json-str {:instancias (instdb/get-instancia (:appl activar))})
   (let [{factory :cbot-factory} (core/get-app-manager (keyword (:appl activar)))
         inst-ks (into [] (factory nil))]
     (json/json-str inst-ks)))

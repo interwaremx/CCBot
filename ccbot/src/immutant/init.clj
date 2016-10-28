@@ -32,13 +32,7 @@
   (println "loading " *ns*)
   (println "cargando immutant.init")
   )
-
-;(use 'mx.interware.cbot.web.server)
-
-;; This file will be loaded when the application is deployed to Immutant, and
-;; can be used to start services your app needs. Examples:
-
-;; To start a Noir app:
+  
 (defn init-immutant [& m]
   (let [params (reduce (fn [p [k v]]
                          (assoc p (keyword k) v))
@@ -57,14 +51,8 @@
     (when (= "true" (:-createdb params "false"))
       (log/debug "Creando base de datos H2")
       (db/init-db))
-    (server/add-middleware (partial extract-host-ip ip-central)) ; casa: "10.3.3.199", valle : "192.168.1.6"
-    
-    ;(server/load-views 
-    ;  (util/app-relative "src/mx/interware/cbot/web/views")
-      ;(util/app-relative "src/mx/interware/node/view")
-      ;(util/app-relative "src/mx/interware/node/service")
-      ;(util/app-relative "src/mx/interware/cbot/selenium")
-    ;  )
+    (server/add-middleware (partial extract-host-ip ip-central))
+   
 
     (comment server/load-views-ns 'mx.interware.cbot.web.views
                           'mx.interware.node.view
@@ -84,32 +72,4 @@
   (println "Setting central ip to:" ip)
   (init-immutant "-central" ip))
 
-(comment ns immutant.init
-  ;(:use ccbot3.core)
-  
-  ;(:require [immutant.messaging :as messaging]
-  ;          [immutant.web :as web]
-  ;          [immutant.util :as util])
-  )
-
-;; This file will be loaded when the application is deployed to Immutant, and
-;; can be used to start services your app needs. Examples:
-
-
-;; Web endpoints need a context-path and ring handler function. The context
-;; path given here is a sub-path to the global context-path for the app
-;; if any.
-
-; (web/start "/" my-ring-handler)
-; (web/start "/foo" a-different-ring-handler)
-
-;; To start a Noir app:
-; (server/load-views (util/app-relative "src//views"))
-; (web/start "/" (server/gen-handler {:mode :dev :ns 'ccbot3}))
-
-
-;; Messaging allows for starting (and stopping) destinations (queues & topics)
-;; and listening for messages on a destination.
-
-; (messaging/start "/queue/a-queue")
-; (messaging/listen "/queue/a-queue" #(println "received: " %))
+(comment ns immutant.init)

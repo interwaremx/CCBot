@@ -5,7 +5,7 @@
 */
 
 var distCtrl = (function() {
-  // Nombre de la operación principal (se pueden definir más).
+  // Nombre de la operaciï¿½n principal (se pueden definir mï¿½s).
   var operationName = "distribuir aplicaciones";
   
   var checkAll = function(clase, idCheck) {
@@ -81,7 +81,6 @@ var distCtrl = (function() {
     jQuery.ajax({
       type: "POST",
       url: "/admin/asynch-send-app-to-info",
-      //data: instMap,
       dataType: generalVal.getGenDataType(),
       timeout: generalVal.getGenTimeout(),
       error: generalVal.handleAjaxError,

@@ -4,14 +4,6 @@
   (println "loading " *ns*)
   )
 
-;; node-status ::=
-;;   {:<ip> {:last-ok long
-;;           :last-bad long
-;;           :last-exception exeption
-;;           :current (:OK|:BAD)}
-;;    :<ip> ...
-
-
 (def node-status (agent {}))
 
 (defn log-success [data millis msg]

@@ -81,17 +81,12 @@
   (fn [context]
     (let [formatter (java.text.SimpleDateFormat. (util/contextualize (:format conf) context))]
       {:result (.format formatter (java.util.Date.))})))
-
-;;demo conf {:msg "Saludos"}
 (defn print-msg-opr
   {:doc "Operacion para mandar un mensaje al sysout marcado con la hora en millis"
    :long-running false}
   [conf]
   (fn [context]
     {:result (util/contextualize (:msg conf) context)}))
-
-
-;;demo conf {:url "http://interware.com.mx?a=1&b=2"}
 (defn get-http-opr-old
   {:doc "Operacion para hacer que la maquina de estados obtenga el contenido de una URL por http"
    :long-running false}
@@ -114,8 +109,6 @@
                           k (.trim k)
                           v (util/contextualize-text (.trim v) context)]
                       (str k "=" v))) (.split mlStr "\n"))))
-
-;;demo conf {:url "http://interware.com.mx" :post "a=1&b=2"} verificar!!!
 (defn post-http-opr
   {:doc "Operacion para hacer que la maquina de estados obtenga el contenido de una URL por http"
    :long-running false}
@@ -131,8 +124,6 @@
       (with-open [rdr (BufferedReader. (InputStreamReader. (.getInputStream con)))]
         {:result (apply str (line-seq rdr))}))))
 
-
-;; demo conf {:filter ".*"}
 (defn print-context-opr
   {:doc "Operacion que imprime el mapa con los resultados de los estados de la maquina"
    :long-running false}
@@ -151,8 +142,6 @@
                          (name (% 0))) 
                       context)))))
       {:result (str "print-context-opr with:" re-str)})))
-
-;; demo conf {:level :info :text :nombre-otro-estado}
 (defn log-opr
   {:doc "Operacion para mandar a log un mensaje con el nivel configurado en el param ':level'"
    :long-running false}
@@ -168,7 +157,6 @@
   (assoc param
     ;text es un vector de keywords a sacar del contexto!
     :text (apply str "" (map #(str (util/contextualize-text % context) "\n") (into [] (.split (str text) "[\n]+"))))
-    ;:to (into [] (map #(str (util/contextualize % context)) (into [] (.split to "[\n\t ,]+"))))
     :to (into [] (.split (util/contextualize to context) "[\n\t ,]+"))
     :password passwd
     :subject (util/contextualize-text subject context)))
@@ -181,8 +169,6 @@
     (log/debug "Executing send-mail-opr \n" conf "\n" context)
     (let [result (basic/mail-it (complete-mail-params conf context))]
       {:result result})))
-
-;; demo conf {}
 (defn human-opr
   {:doc "Operacion que permite la intervencion de un humano que deberá rearrancar la máquina de estados"
    :long-running true}
@@ -194,11 +180,6 @@
          :subprotocol "h2"
          :subname "/tmp/clojure.contrib.sql.test.db"
          :create true})
-
-;jdbc:h2:~/test
-;;demo conf {:db {:classname "org.h2.Driver" :subprotocol "h2"
-;;                :subname "/tmp/test.db" :create true}
-;;           :query "select count(*) from estado"}
 (defn sql-read-opr
   [conf]
   (fn [context]
@@ -208,8 +189,6 @@
                      con
                      [(util/contextualize (:query conf) context)])]
         {:result (pr-str result)}))))
-
-;;demo conf {:host "10.1.1.23" :port 22}
 (defn socket-opr
   [conf]
   (fn [context]
@@ -219,7 +198,6 @@
       {:result "socket-opr"}
       (catch java.net.ConnectException ce
         (log/info (str (.getName (class ce)) ":" (.getMessage ce)))
-        ;{:result "java.net.ConnectException: Connection refused"}
         (throw ce)))))
 
 (defn- contextualize-subject-set [subject-vec context]
@@ -231,14 +209,9 @@
   ([fn p1 p2 k1 & ks]
      `[(ctx-all ~fn ~p1 ~p2 ~k1)
        (ctx-all ~fn ~p1 ~p2 ~(first ks) ~@(rest ks))]))
-
-;;demo conf {:host "pop.gmail.com" :port 995 :protocol "pop3s"
-;;           :email "robot@interware.com.mx" :password "123456"
-;;           :subject-re ".*TEXTO.*"}
 (defn get-mail-opr
   [conf]
   (fn [context]
-;;    (debug (str "set:" sset))
     (let [[host port protocol email password]
           (flatten (ctx-all util/contextualize conf context
                             :host :port :protocol :email :password))]
@@ -251,12 +224,7 @@
   (log/info (str "creating fn for:" code))
   (let [func (load-string (if (nil? code) 
                             "(fn [ctx] \"undefined clojure code!\")" 
-                            (str ;"(do (require '[clj-webdriver.taxi :as t]
-                                 ;              '[mx.interware.cbot.operations :as opr]
-                                 ;              '[mx.interware.cbot.web.server :as srv]) " 
-                                 code 
-                                 ;")"
-                                 )))
+                            (str code)))
         func (eval func)]
     func))
 
@@ -266,8 +234,6 @@
   [conf]
   (let [code (:code conf)
         func (str->fn code)]
-    ;(println code)
-    ;(println func)
     (fn [context]
       (log/debug "Entrando a clojure-opr, code: " (:code conf))
       (log/debug "Entrando a clojure-opr, context: " context)
@@ -278,7 +244,6 @@
             result)
           {:result (str result)})))))
 
-;;demo conf {:code (function(context) {.....})}
 (defn js-opr
   [conf]
   (let [ctx (org.mozilla.javascript.Context/enter)
@@ -313,8 +278,6 @@
     (let [instance-status (:instance-status_ context)]
       (cond (= :good instance-status) {:result "skip"}
             :otherwise {:instance-status_ :good :result "send"}))))
-
-;;demo conf {:minutes2wait 15}
 (defn switch-bad-opr [conf]
   (fn [context]
     (let [instance-status (:instance-status_ context)]
@@ -389,7 +352,7 @@
           (catch Exception e
             (log/error "El browser anterior no contesta probablemente ya no existia el proceso o está sordo")))))
     
-    (let [;dummy (println "creando browser !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    (let [
           drv (tutil/get-driver browser binary-dir profile-dir profile-spec) ;(t/new-driver {:browser :firefox})
             ]
       (when (= browser :htmlunit)
@@ -440,8 +403,6 @@
               (when close
                 (try
                   (t/quit browser-drv)
-                  ;(catch Exception e
-                  ;  (log/error e))
                   (finally
                     (swap! browser-drv-map dissoc drv-key-arr))))
                (if (string? result)
@@ -480,8 +441,6 @@
               (when close
                 (try
                   (t/quit browser-drv)
-                  ;(catch Exception e
-                  ;  (log/error e))
                   (finally
                     (swap! browser-drv-map dissoc drv-key-arr))))
               (if (string? result)

@@ -103,10 +103,6 @@
   (get-reporte-fecha-ip-operativa (m :fechaEjecucion) (m :ip) (m :operativa)))
 
 
-
-;;Cambios Edgar
-
-
 (defn get-har-reporte [inicio termino]
   (log/debug "INICIO-FIN:" inicio "---" termino)
   (iwdb/db-read "SELECT p.nombre_estado, p.inicio, p.tiempo_carga, p.carga_contenido, e.url, e.status, e.tipo_contenido, 
@@ -115,13 +111,4 @@ From Paginas p
 inner join elementos_pagina e 
 on p.id_pagina=e.id_pagina 
 where p.inicio >= ? and p.inicio <= ? order by inicio" inicio termino))
-
-
-
-;(clojure.pprint/pprint (mx.interware.cbot.web.model.db/db-read 
-;                         "SELECT p.nombre_estado, p.inicio, p.tiempo_carga, p.carga_contenido, e.url, e.tipo_contenido, 
-;e.tiempo_total, e.tiempo_espera, e.tiempo_bloqueo, e.tiempo_dns, e.tiempo_recepcion, e.tiempo_conexion, e.tamanyo, e.tiempo_envio
-;From Paginas p 
-;inner join elementos_pagina e 
-;on p.id_pagina=e.id_pagina "))
 

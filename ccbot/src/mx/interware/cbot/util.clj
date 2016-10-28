@@ -9,9 +9,7 @@
             [clojure.tools.logging :as log]))
 
 (do
-  (println "loading " *ns*)
-  ;(org.apache.log4j.xml.DOMConfigurator/configureAndWatch "log4j.xml")
-  ) 
+  (println "loading " *ns*)) 
 
 (defmacro warn-exception [fnk e & args]
   `(do

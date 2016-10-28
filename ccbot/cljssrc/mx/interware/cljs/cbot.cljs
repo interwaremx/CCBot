@@ -12,9 +12,7 @@
 (defn test [e]
   (js/alert "Le picaste al save!"))
 
-;(jq/document-ready
 (.ready (jq/$ js/document)
   (fn []
-    ;(.click (jq/$ "#save-states") test)
     (js/alert "ClojureScript running!")
     ))

@@ -205,7 +205,6 @@
          [:th {:class "thListNode"} "ID"]
          [:th {:class "thListNode"} "Nombre"]
          [:th {:class "thListNode"} "Válidado"]
-         ;[:th {:class "thListNode"} "Configuraci&oacute;n"]
          [:th {:class "thListNode"} "Robot"]]
         (map (fn [{:keys [ip shortn name pubkey valid]}]
                [:tr
@@ -224,7 +223,6 @@
                       :href (str "/admin/node/config?ip=" ip "&shortn=" shortn "&name=" name "&pubkey=" (java.net.URLEncoder/encode pubkey) "&valid=" (if-not valid "false" "true"))}
                   [:img {:src "/images/node/config.png"}]]]
                 [:td ip]
-                 ;[:a {:id "test" :href (str ip "/viewcbot") :title "Ver Robot" :target "_blank"} ip]]
                 [:td shortn] 
                 [:td name]
                 [:td (if valid [:img {:src "/images/node/view.png"}] [:img {:src "/images/node/stop.png"}])]

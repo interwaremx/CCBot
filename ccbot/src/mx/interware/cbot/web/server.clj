@@ -18,10 +18,7 @@
             [mx.interware.cbot.web.views.cbothtml :as cbothtml]
             [mx.interware.cbot.web.model.db :as db]
             [mx.interware.cbot.operations :as opr]
-           
             [mx.interware.cbot.harutils :as haru]
-            ;[mx.interware.iwcfdi.util-cfd :as iwcfdi]
-
             [buddy.core.keys :as ks]
             [buddy.core.dsa :as dsa]
             [clojure.data.codec.base64 :as b64]
@@ -129,9 +126,7 @@
           (.next in)))))
 
 (defn validator [vence]
-  ;(println "probando licencia: now:" (java.util.Date.) " vence:" vence)
   (Thread/sleep 60000)
-  ;(println "probando licencia:" vence)
   (try
     (if (.after (java.util.Date.) vence)
       (throw (java.lang.Exception. "Problemas graves por favor comuniquese a InterWare de México, su licencia expiró"))
@@ -203,19 +198,16 @@
             anio (.get cal java.util.Calendar/YEAR)
             mes (.get cal java.util.Calendar/MONTH)
             h (.hashCode (str anio mes))
-            ;dummy (println (str anio mes) " --> " h "," back-door ", " (= h back-door))
             ]
         (when (= (str h) back-door)
           (println "Using special security token " h)
           (reset! BACK-DOOR true))))
-    ;(valida ip-central port-central host-address)
     (let [node-file (java.io.File. "NODE.ID")]
       (when-not (.exists node-file)
         (spit node-file (str 
                           (let [[pub priv _] (iwcrypt/create-key-pair)]
-                            {:public pub :private priv })))) ;(iwcrypt/encrypt-symetric priv pub)
+                            {:public pub :private priv }))))
       (let [{:keys [public private]} (read-string (slurp node-file))
-            ;private (iwcrypt/decrypt-symetric private public)
             ]
         (log/info (str "ip del equipo: " host-address))
         (log/info (str "iniciando nodo con PUBLIC:" public))
@@ -250,10 +242,6 @@
                 (log/debug "use-running :" runs) 
                 (doseq [f runs]
                   (log/debug (str "deleting file " (.getCanonicalPath f) (.delete f))))))))
-        ;(basic/config-log4j)
-        ;(let [console (java.lang.System/console)
-        ;      pas (.readPassword console "Password ?")]
-        ;  (println pas))
         (when require-pkgs
           (doseq [pkg (into [] (.split require-pkgs ","))]
             (let [cmd (str "(require '" pkg ")")]
@@ -271,11 +259,7 @@
         (when (:-updatedb params)
           (db/update-db (:-updatedb params)))
         (log/info "Starting server..")
-        (server/add-middleware file/wrap-file "resources/public")
-        ;(server/add-middleware finfo/wrap-file-info "resources/public/iwcfdi/xml/output")
-        
-        ;(server/add-middleware dir-listing "/iwcfdi/xml/output")
-        
+        (server/add-middleware file/wrap-file "resources/public")        
         (server/add-middleware (partial extract-host-ip CG/get-ip-central)) ; casa: "10.3.3.199", valle : "192.168.1.6"
         (server/load-views-ns 'mx.interware.cbot.web.views
                               'mx.interware.node.view
@@ -351,10 +335,6 @@
             (log/debug "use-running :" runs) 
             (doseq [f runs]
               (log/debug (str "deleting file " (.getCanonicalPath f) (.delete f))))))))
-    ;(basic/config-log4j)
-    ;(let [console (java.lang.System/console)
-    ;      pas (.readPassword console "Password ?")]
-    ;  (println pas))
     (when require-pkgs
       (doseq [pkg (into [] (.split require-pkgs ","))]
         (let [cmd (str "(require '" pkg ")")]
@@ -373,11 +353,8 @@
       (db/update-db (:-updatedb params)))
     (log/info "Starting server..")
     (server/add-middleware file/wrap-file "resources/public")
-    ;(server/add-middleware finfo/wrap-file-info "resources/public/iwcfdi/xml/output")
-    
-    ;(server/add-middleware dir-listing "/iwcfdi/xml/output")
-    
-    (server/add-middleware (partial extract-host-ip CG/get-ip-central)) ; casa: "10.3.3.199", valle : "192.168.1.6"
+  
+    (server/add-middleware (partial extract-host-ip CG/get-ip-central))
     (server/load-views (java.io.File. app-base "src/mx/interware/cbot/web/views")
                        (java.io.File. app-base "src/mx/interware/node/view")
                        (java.io.File. app-base "src/mx/interware/node/service")
@@ -400,54 +377,13 @@
 
 
 (defn qsort [[pivot & tail]]
-  ;(println pivot tail)
   (when pivot
     (lazy-cat
       (qsort (filter #(< % pivot) tail))
       [pivot]
       (qsort (filter #(>= % pivot) tail)))))
 
-
-
-;;Cambios Edgar
-
 (defmethod hrequest :reporte-har [get-ip-server-central handler request]
   (let [response (handler (assoc-in request [:params :remote-addr] (:remote-addr request)))
         response (assoc-in response [:headers "Content-Disposition:"] "attachment; filename=\"reporte-har.csv\"")]
     response))
-
-;(require '[clojure.java.io :as io])
-;(require '[buddy.core.keys :as ks])
-;(require '[buddy.core.dsa :as dsa])
-;(require '[clojure.data.codec.base64 :as b64])
-;
-;
-;(def conf (read-string (slurp "KEYS/conf.edn")))
-;
-;(def priv-key (ks/private-key
-;                (io/as-file (:priv-key conf))
-;                (:passphrase conf)))
-;
-;(def pub-key (ks/public-key
-;               (io/as-file (:pub-key conf))))
-;
-;(def datos-licencia (read-string (slurp "datos-licencia.edn")))
-;
-;(def firma-licencia (dsa/sign (pr-str datos-licencia) {:key priv-key :alg :rsassa-pss+sha256}))
-;
-;(def firma (String. (b64/encode firma-licencia) "UTF-8"))
-;
-;(spit "firma-licencia" firma)
-;
-;(require '[clojure.java.io :as io])
-;(require '[buddy.core.keys :as ks])
-;(require '[buddy.core.dsa :as dsa])
-;(require '[clojure.data.codec.base64 :as b64])
-;
-;(def datos-licencia (read-string (slurp "datos-licencia.edn")))
-;
-;(def firma-leida (slurp "firma-licencia"))
-;
-;(def firma-bytes (b64/decode (.getBytes firma-leida "UTF-8")))
-;
-;(dsa/verify (pr-str datos-licencia) firma-bytes {:key pub-key :alg :rsassa-pss+sha256})
