@@ -83,7 +83,7 @@
         0
         (let [store-connection {:classname "oracle.jdbc.driver.OracleDriver"
                                 :subprotocol "oracle"
-                                :subname "thin:@150.100.152.22:1521:"
+                                :subname "thin:@127.0.0.1:1521:"
                                 :user "user"
                                 :password "password"}
               next-id (fn [] "returns [i] the id of the esta row" (:id (first (mx.interware.cbot.web.model.db/db-read-from store-connection "select SQ_CD_ESTADISTICAMON.NEXTVAL as id from dual"))))
@@ -127,7 +127,7 @@
 (fn [ctx]
   (let [store-connection {:classname "oracle.jdbc.driver.OracleDriver"
                             :subprotocol "oracle"
-                            :subname "thin:@150.100.152.22:1521:BMRBP001"
+                            :subname "thin:@127.0.0.1:1521:BMRBP001"
                             :user "user"
                             :password "password"}
           next-id (fn [] "returns [i] the id of the esta row" (:id (first (mx.interware.cbot.web.model.db/db-read-from store-connection "select SQ_CD_ESTADISTICAMON.NEXTVAL as id from dual"))))
@@ -139,7 +139,7 @@
   (try ;^(Mon|Tue|Wed|Thu|Fri) (09|1[0-8]):[012345][05]$
     (let [store-connection {:classname "oracle.jdbc.driver.OracleDriver"
                             :subprotocol "oracle"
-                            :subname "thin:@150.100.152.22:1521:BMRBP001"
+                            :subname "thin:@127.0.0.1:1521:BMRBP001"
                             :user "user"
                             :password "password"}
           next-id (fn [] "returns [i] the id of the esta row" (:id (first (mx.interware.cbot.web.model.db/db-read-from store-connection "select SQ_CD_ESTADISTICAMON.NEXTVAL as id from dual"))))
@@ -183,7 +183,7 @@
   (try
     (let [store-connection {:classname "oracle.jdbc.driver.OracleDriver"
                             :subprotocol "oracle"
-                            :subname "thin:@150.100.152.22:1521:BMRBP001"
+                            :subname "thin:@127.0.0.1:1521:BMRBP001"
                             :user "user"
                             :password "password"}
           maxrows (Integer/parseInt (or (:max-store-rows ctx) "1"))
