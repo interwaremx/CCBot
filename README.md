@@ -15,23 +15,17 @@ CCBot is a friendly and highly configurable platform that allows monitoring of s
 
 ## Technologies
  * Clojure
- * Java
+ * 
  
 ## Requirements
  * Linux based operating system 
  * Maven
-
 ## Installation
 ### Central
-1.	Before installing, you need to create a system user, named “cbot” and login using that user.
-2.	Decompress tar file CCBOT3-distro-XX.tg, in order to create CCBOT3-distro directory
-3.	Generate a ssh-key (Using ssh-keygen).
+1.	Uncompress unzip CCBOT3-distro-3.X.X.zip
 4.	Write server ip address at CCBOT3-distro/CENTRAL.IP
 5.	Write the central server’s listening port at CCBOT3-distro/CENTRAL.PORT (8050 suggested)
 6.	Write node server’s port at CCBOT3-distro/ NODE.PORT (8060 is suggested)
-7.	Execute startcentral.sh}
-
-### Nodes
-1.	Before installing, you need to create a system user, named “cbotnode” and login using that user.
-2.	Create directory shame .ssh in “cbotnode” user’s home directory.
-
+7.	Execute startcentral.sh
+8.  If server IP address is equal to CENTRAL.IP it will ask you for the admin password
+9.  Navigate in your browser to http://localhost:8050 (default port).
