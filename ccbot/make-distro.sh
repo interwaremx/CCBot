@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "Maven is required";
+mvn install:install-file -Dfile=./lib/commons-ssl-1.0.0.jar -DgroupId=commons-ssl -DartifactId=commons-ssl -Dversion=1.0.0 -Dpackaging=jar
 rm -rvf CCBOT3-distro*
 rm -v cbot.log*
 mkdir CCBOT3-distro

@@ -30,3 +30,8 @@ CCBot is a friendly and highly configurable platform that allows monitoring of s
 7.	Execute startcentral.sh
 8.  If server IP address is equal to CENTRAL.IP it will ask you for the admin password
 9.  Navigate in your browser to http://localhost:8050 (default port).
+10. Login with the username ccbot using the password you wrote before.
+
+## Build
+1. Install and add to your CLASSPATH Maven 3. 
+2. Execute the make-distro.sh file from source code.
