@@ -13,13 +13,14 @@ CCBot is a friendly and highly configurable platform that allows monitoring of s
 * Clojure scripts execution.
 * Database conectivity tests.
 
-## Technologies
+## Language
  * Clojure
- * 
- 
+ * Javascript
+
 ## Requirements
  * Linux based operating system 
- * Maven
+ * Maven 
+
 ## Installation
 ### Central
 1.	Uncompress unzip CCBOT3-distro-3.X.X.zip
