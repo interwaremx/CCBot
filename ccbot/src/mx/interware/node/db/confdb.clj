@@ -5,7 +5,7 @@
 
 (defn add-conf 
 "returns {:scope_identity() No} when ok or throws exception, 
-conf-map ==> {:ip \"192.168.1.1\" :appl \"aplicacion\" :inst \"instancia\" :campo \"delta\" :valor \"1000\"}" 
+conf-map ==> {:ip \"127.0.0.1\" :appl \"aplicacion\" :inst \"instancia\" :campo \"delta\" :valor \"1000\"}" 
   ([conf-map] {:pre [(not (nil? (:ip conf-map)))]}
   (iwdb/add-row :configuracion conf-map))
   ([ip appl inst campo-valor-map]
@@ -42,7 +42,7 @@ conf-map ==> {:ip \"192.168.1.1\" :appl \"aplicacion\" :inst \"instancia\" :camp
 
 (defn- insert-conf 
 "returns {:scope_identity() No} when ok or throws exception, 
-conf-map ==> {:ip \"192.168.1.1\" :appl \"aplicacion\" :inst \"instancia\" :campo \"delta\" :valor \"1000\"}" 
+conf-map ==> {:ip \"127.0.0.1\" :appl \"aplicacion\" :inst \"instancia\" :campo \"delta\" :valor \"1000\"}" 
   ([conf-map] {:pre [(not (nil? (:ip conf-map)))]}
   (sql/insert! iwdb/db :configuracion conf-map))
   ([ip appl inst campo-valor-map]
